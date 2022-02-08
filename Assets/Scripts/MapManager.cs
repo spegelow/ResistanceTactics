@@ -102,4 +102,5 @@ public class MapManager : MonoBehaviour
             mapTiles[i].UpdateHeight();
         }
     }
+
 }

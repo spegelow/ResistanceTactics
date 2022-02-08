@@ -44,4 +44,21 @@ public class MapTile : MonoBehaviour
             UpdateHeight();
         }
     }
+
+    private void OnMouseOver()
+    {
+        InputManager.TileHovered(this);
+    }
+
+    /// <summary>
+    /// Calculates a Vector3 position that would be 'on top' of this map tile. 
+    /// Used for positioning cursor, units, and other GameObjects that occupy tiles.
+    /// </summary>
+    /// <returns>The position on 'top' of this tile</returns>
+    public Vector3 GetSurfacePosition()
+    {
+        //The position should be half the tile's height above it's center point
+        Vector3 position = this.transform.position + (Vector3.up * this.transform.localScale.y / 2f);
+        return position;
+    }
 }

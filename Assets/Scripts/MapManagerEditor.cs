@@ -1,4 +1,3 @@
-//C# Example (LookAtPointEditor.cs)
 using UnityEngine;
 using UnityEditor;
 
@@ -7,10 +6,13 @@ public class MapManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        //Draw the base inspector
         base.OnInspectorGUI();
 
+        //Get the inspected object
         MapManager targetManager = (MapManager) target;
 
+        //Display our buttons
         if (GUILayout.Button("Clear Map"))
         {
             targetManager.ClearMap();
