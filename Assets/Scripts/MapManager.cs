@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
+    public List<MapTile> mapTiles;
+
     public GameObject mapTilePrefab;
     public int mapWidth;
     public int mapHeight;
@@ -32,6 +34,10 @@ public class MapManager : MonoBehaviour
                 newObject = GameObject.Instantiate(mapTilePrefab, this.transform);
                 newObject.transform.position = new Vector3(x, 0, z);
                 newObject.name = "MapTile (" + x + ", " + z + ")";
+
+
+                MapTile newTile = newObject.GetComponent<MapTile>();
+                mapTiles.Add(newTile);
             }
         }
     }
