@@ -20,5 +20,15 @@ public class MapManagerEditor : Editor
         {
             targetManager.GenerateMap(targetManager.mapWidth, targetManager.mapHeight);
         }
-}
+
+        if (GUILayout.Button("Save Map"))
+        {
+            targetManager.SaveMap();
+        }
+
+        if (GUILayout.Button("Load Map"))
+        {
+            targetManager.LoadMap();
+        }
+    }
 }

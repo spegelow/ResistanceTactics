@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ddeb1810946b946b57cebe50626a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapTiles: []
   mapTilePrefab: {fileID: 1805223784303050371, guid: 2c6fbc830818ffe42904d31c81fb4506, type: 3}
   mapWidth: 10
   mapHeight: 10
+  mapData: {fileID: 11400000, guid: 1e30f18857a65174784bca8d833b06d2, type: 2}

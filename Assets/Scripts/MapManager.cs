@@ -10,6 +10,8 @@ public class MapManager : MonoBehaviour
     public int mapWidth;
     public int mapHeight;
 
+    public MapData mapData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +37,9 @@ public class MapManager : MonoBehaviour
                 newObject.transform.position = new Vector3(x, 0, z);
                 newObject.name = "MapTile (" + x + ", " + z + ")";
 
-
+                //Initialize the map tile
                 MapTile newTile = newObject.GetComponent<MapTile>();
+                newTile.Initialize(x, z);
                 mapTiles.Add(newTile);
             }
         }
@@ -47,6 +50,7 @@ public class MapManager : MonoBehaviour
 
         //Delete the existing map by destroying all children of the map manager
         //It is done in two steps due to the odd interaction of DestroyImmediate with iteration
+        mapTiles.Clear();
         List<Transform> children = new List<Transform>();
         foreach (Transform child in this.transform)
         {
@@ -58,5 +62,44 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public void SaveMap()
+    {
+        if(mapData == null)
+        {
+            Debug.LogError("Cannot save without a map file");
+            return;
+        }
 
+        //Save map bounds
+        mapData.height = mapHeight;
+        mapData.width = mapWidth;
+
+        //Save the heights of all the tiles
+        mapData.tileHeights = new List<int>();
+        mapTiles.ForEach(tile => mapData.tileHeights.Add(tile.tileHeight));
+    }
+
+    public void LoadMap()
+    {
+        if (mapData == null)
+        {
+            Debug.LogError("Cannot load without a map file");
+            return;
+        }
+
+        //Load map bounds
+        this.mapWidth = mapData.width;
+        this.mapHeight = mapData.height;
+
+        //Clear the current map and create all the new objects
+        ClearMap();
+        GenerateMap(mapWidth, mapHeight);
+
+        //Update each of the new tiles with the correct height
+        for(int i = 0; i<mapData.tileHeights.Count; i++)
+        {
+            mapTiles[i].tileHeight = mapData.tileHeights[i];
+            mapTiles[i].UpdateHeight();
+        }
+    }
 }

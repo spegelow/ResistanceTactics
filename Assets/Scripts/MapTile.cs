@@ -7,6 +7,9 @@ public class MapTile : MonoBehaviour
     public int tileHeight;
     int _previousHeight;
 
+    public int x;
+    public int z;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,12 @@ public class MapTile : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Initialize(int x, int z)
+    {
+        this.x = x;
+        this.z = z;
     }
 
     public void UpdateHeight()
