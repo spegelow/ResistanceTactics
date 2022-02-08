@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour
@@ -77,6 +78,11 @@ public class MapManager : MonoBehaviour
         //Save the heights of all the tiles
         mapData.tileHeights = new List<int>();
         mapTiles.ForEach(tile => mapData.tileHeights.Add(tile.tileHeight));
+
+        //Actually save the asset file
+        EditorUtility.SetDirty(mapData);
+        AssetDatabase.SaveAssets();
+
     }
 
     public void LoadMap()
