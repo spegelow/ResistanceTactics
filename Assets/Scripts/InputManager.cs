@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
     public GameObject cursor;
     public MapTile currentCursorTile;
 
+    public Unit unit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,12 @@ public class InputManager : MonoBehaviour
             instance.MoveCursor(tile);
         }
     }
+
+    public static void TileClicked(MapTile tile)
+    {
+        instance.unit.MoveToTile(tile);
+    }
+
 
     void MoveCursor(MapTile tile)
     {

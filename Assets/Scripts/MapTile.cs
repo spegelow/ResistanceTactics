@@ -7,6 +7,11 @@ public class MapTile : MonoBehaviour
     public int tileHeight;
     int _previousHeight;
 
+    public Unit occupant;
+
+    public GameObject tileHighlight;
+    private float highlightOffset = .01f;
+
     public int x;
     public int z;
 
@@ -33,6 +38,9 @@ public class MapTile : MonoBehaviour
         //Update the height of the model in the scene
         this.transform.localScale = new Vector3(1, tileHeight, 1);
         this.transform.localPosition = new Vector3(this.transform.localPosition.x, (tileHeight / 2f)-.5f, this.transform.localPosition.z);
+
+        //Move the highlight to the correct position
+        //tileHighlight.transform.position = GetSurfacePosition() + Vector3.up * highlightOffset;
     }
 
     private void OnValidate()
@@ -50,15 +58,29 @@ public class MapTile : MonoBehaviour
         InputManager.TileHovered(this);
     }
 
+    private void OnMouseDown()
+    {
+        InputManager.TileClicked(this);
+    }
+
     /// <summary>
     /// Calculates a Vector3 position that would be 'on top' of this map tile. 
     /// Used for positioning cursor, units, and other GameObjects that occupy tiles.
     /// </summary>
-    /// <returns>The position on 'top' of this tile</returns>
+    /// <returns>Returns the position on 'top' of this tile</returns>
     public Vector3 GetSurfacePosition()
     {
         //The position should be half the tile's height above it's center point
         Vector3 position = this.transform.position + (Vector3.up * this.transform.localScale.y / 2f);
         return position;
+    }
+
+    /// <summary>
+    /// Checks whether or not anything is currently occupying this tile (units, objects, etc)
+    /// </summary>
+    /// <returns>Returns whether this tile is occupied or not</returns>
+    public bool IsOccupied()
+    {
+        return (occupant != null);
     }
 }
