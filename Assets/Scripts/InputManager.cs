@@ -8,12 +8,15 @@ public class InputManager : MonoBehaviour
     public GameObject cursor;
     public MapTile currentCursorTile;
 
-    public Unit unit;
+    List<MapTile> moveableTiles;
+    Unit currentUnit;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         instance = this;
+
+        moveableTiles = new List<MapTile>();
     }
 
     // Update is called once per frame
@@ -22,7 +25,7 @@ public class InputManager : MonoBehaviour
         
     }
 
-    public static void TileHovered(MapTile tile)
+    public void TileHovered(MapTile tile)
     {
         
         if (instance.currentCursorTile != tile)
@@ -31,14 +34,21 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public static void TileClicked(MapTile tile)
+    public void TileClicked(MapTile tile)
     {
-        
-        instance.unit.MoveToTile(tile);
+        if (currentUnit != null)
+        {
+            if (moveableTiles.Contains(tile))
+            {
+                currentUnit.MoveToTile(tile);
 
+                currentUnit = null;
+                MapManager.instance.ClearTileHighlights();
+                moveableTiles.Clear();
 
-        MapManager.instance.ClearTileHighlights();
-        instance.unit.GetMoveableTiles().ForEach(tile => tile.SetHighlight(true));
+                BattleManager.instance.EndTurn();
+            }
+        }
     }
 
 
@@ -50,5 +60,19 @@ public class InputManager : MonoBehaviour
         
 
         //TODO UPDATE UI
+    }
+
+    public void SetCurrentUnit(Unit unit)
+    {
+        currentUnit = unit;
+    }
+
+    public void SetMoveableTiles(List<MapTile> tiles)
+    {
+        moveableTiles = tiles;
+
+        //Set highlighting for tiles
+        MapManager.instance.ClearTileHighlights();
+        tiles.ForEach(tile => tile.SetHighlight(true));
     }
 }

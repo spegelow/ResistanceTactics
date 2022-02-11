@@ -55,12 +55,12 @@ public class MapTile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        InputManager.TileHovered(this);
+        InputManager.instance.TileHovered(this);
     }
 
     private void OnMouseDown()
     {
-        InputManager.TileClicked(this);
+        InputManager.instance.TileClicked(this);
     }
 
     /// <summary>

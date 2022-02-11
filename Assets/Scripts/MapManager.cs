@@ -15,8 +15,7 @@ public class MapManager : MonoBehaviour
 
     public MapData mapData;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         instance = this;
     }
