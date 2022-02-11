@@ -43,9 +43,7 @@ public class Unit : MonoBehaviour
 
     public List<MapTile> GetMoveableTiles()
     {
-        List<MapTile> tiles = new List<MapTile>();
-
-        return tiles;
+        return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, movementRange);
     }
 
 

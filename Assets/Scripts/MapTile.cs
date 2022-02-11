@@ -83,4 +83,9 @@ public class MapTile : MonoBehaviour
     {
         return (occupant != null);
     }
+
+    public void SetHighlight(bool state)
+    {
+        tileHighlight.SetActive(state);
+    }
 }

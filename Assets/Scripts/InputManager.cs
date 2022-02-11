@@ -33,7 +33,12 @@ public class InputManager : MonoBehaviour
 
     public static void TileClicked(MapTile tile)
     {
+        
         instance.unit.MoveToTile(tile);
+
+
+        MapManager.instance.ClearTileHighlights();
+        instance.unit.GetMoveableTiles().ForEach(tile => tile.SetHighlight(true));
     }
 
 

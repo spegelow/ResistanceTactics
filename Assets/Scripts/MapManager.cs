@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
+    public static MapManager instance;
+
     public List<MapTile> mapTiles;
 
     public GameObject mapTilePrefab;
@@ -16,7 +18,7 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame
@@ -81,7 +83,7 @@ public class MapManager : MonoBehaviour
 
         //Actually save the asset file
         EditorUtility.SetDirty(mapData);
-        AssetDatabase.SaveAssets();
+        AssetDatabase.SaveAssetIfDirty(mapData);
 
     }
 
@@ -109,4 +111,41 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public MapTile GetTile(int x, int z)
+    {
+        if(x<0 || x>= mapWidth || z < 0 || z >= mapHeight)
+        {
+            //Coordinates out of bounds, return null
+            return null;
+        }
+
+        return mapTiles[x + z * mapWidth];
+    }
+
+    public List<MapTile> GetTilesInRange(int centerX, int centerZ, int range)
+    {
+        List<MapTile> tiles = new List<MapTile>();
+
+        for(int x = centerX - range; x <= centerX + range; x++)
+        {
+            for (int z = centerZ - range; z <= centerZ + range; z++)
+            {
+                //If the tile is in range, add it to the list
+                if(Mathf.Abs(centerX - x) + Mathf.Abs(centerZ - z) <= range)
+                {
+                    if (GetTile(x, z) != null)
+                    {
+                        tiles.Add(GetTile(x, z));
+                    }
+                }
+            }
+        }
+
+        return tiles;
+    }
+
+    public void ClearTileHighlights()
+    {
+        mapTiles.ForEach(tile => tile.SetHighlight(false));
+    }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(MapManager))]
 public class MapManagerEditor : Editor
@@ -31,6 +32,13 @@ public class MapManagerEditor : Editor
         if (GUILayout.Button("Load Map"))
         {
             targetManager.LoadMap();
+        }
+
+        //Actually save the map manager in scene
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(targetManager);
+            EditorSceneManager.MarkSceneDirty(targetManager.gameObject.scene);
         }
     }
 }

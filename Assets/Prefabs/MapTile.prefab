@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 2739254104189281253}
   - component: {fileID: 4708272966780148011}
   - component: {fileID: 7129779209861215066}
-  - component: {fileID: 8231439861423519132}
   m_Layer: 0
   m_Name: TileHighlight
   m_TagString: Untagged
@@ -196,17 +195,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8231439861423519132
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3645875120758780393}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
