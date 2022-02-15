@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour
     {
         //Show current units movement range
         InputManager.instance.SetCurrentUnit(turnQueue[0]);
-        InputManager.instance.SetMoveableTiles(turnQueue[0].GetMoveableTiles());
+        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles());
         InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
     }
 

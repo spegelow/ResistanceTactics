@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
     public GameObject cursor;
     public MapTile currentCursorTile;
 
-    List<MapTile> moveableTiles;
+    List<MapTile> selectableTiles;
     Unit currentUnit;
 
     public delegate void ActionDelegate(Unit unit, MapTile targetTile);
@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
     {
         instance = this;
 
-        moveableTiles = new List<MapTile>();
+        selectableTiles = new List<MapTile>();
     }
 
     // Update is called once per frame
@@ -43,9 +43,9 @@ public class InputManager : MonoBehaviour
         {
             //Validate the clicked tile
             //TODO Generalize this code for any action, not just movement
-            if (moveableTiles.Contains(tile))
+            if (selectableTiles.Contains(tile))
             {
-                moveableTiles.Clear();
+                selectableTiles.Clear();
                 currentAction(currentUnit, tile);
             }
         }
@@ -67,9 +67,9 @@ public class InputManager : MonoBehaviour
         currentUnit = unit;
     }
 
-    public void SetMoveableTiles(List<MapTile> tiles)
+    public void SetSelectableTiles(List<MapTile> tiles)
     {
-        moveableTiles = tiles;
+        selectableTiles = tiles;
 
         //Set highlighting for tiles
         MapManager.instance.ClearTileHighlights();

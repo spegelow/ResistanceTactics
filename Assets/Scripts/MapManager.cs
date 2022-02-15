@@ -123,14 +123,29 @@ public class MapManager : MonoBehaviour
 
     public List<MapTile> GetTilesInRange(int centerX, int centerZ, int range)
     {
+        return GetTilesInRange(centerX, centerZ, 0, range);
+    }
+
+    /// <summary>
+    /// Returns the list of tiles on the map within the given range centered on the given point
+    /// </summary>
+    /// <param name="centerX"></param>
+    /// <param name="centerZ"></param>
+    /// <param name="minRange"></param>
+    /// <param name="maxRange"></param>
+    /// <returns></returns>
+    public List<MapTile> GetTilesInRange(int centerX, int centerZ, int minRange, int maxRange)
+    {
+        int range;
         List<MapTile> tiles = new List<MapTile>();
 
-        for(int x = centerX - range; x <= centerX + range; x++)
+        for(int x = centerX - maxRange; x <= centerX + maxRange; x++)
         {
-            for (int z = centerZ - range; z <= centerZ + range; z++)
+            for (int z = centerZ - maxRange; z <= centerZ + maxRange; z++)
             {
+                range = Mathf.Abs(centerX - x) + Mathf.Abs(centerZ - z);
                 //If the tile is in range, add it to the list
-                if(Mathf.Abs(centerX - x) + Mathf.Abs(centerZ - z) <= range)
+                if (range <= maxRange && range >= minRange)
                 {
                     if (GetTile(x, z) != null)
                     {

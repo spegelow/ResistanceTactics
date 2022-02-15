@@ -7,7 +7,22 @@ public class Unit : MonoBehaviour
     public MapTile currentTile;
     MapTile _previousTile;
 
+    public string unitName;
+
+    public int team;
+
     public int movementRange;
+    
+    public int minAttackRange;
+    public int maxAttackRange;
+
+    public int minDamage;
+    public int maxDamage;
+
+    public float accuracy;
+
+    public int maxHealth;
+    public int currentHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +59,11 @@ public class Unit : MonoBehaviour
     public List<MapTile> GetMoveableTiles()
     {
         return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, movementRange);
+    }
+
+    public List<MapTile> GetAttackableTiles()
+    {
+        return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, minAttackRange, maxAttackRange);
     }
 
 
