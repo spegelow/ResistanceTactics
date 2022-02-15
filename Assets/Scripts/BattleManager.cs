@@ -29,6 +29,7 @@ public class BattleManager : MonoBehaviour
         //Show current units movement range
         InputManager.instance.SetCurrentUnit(turnQueue[0]);
         InputManager.instance.SetMoveableTiles(turnQueue[0].GetMoveableTiles());
+        InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
     }
 
     public void EndTurn()
@@ -63,5 +64,18 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+
+    public void MoveUnit(Unit unit, MapTile targetTile)
+    {
+        unit.MoveToTile(targetTile);
+
+        unit = null;
+        MapManager.instance.ClearTileHighlights();
+        
+        //TODO Set up action input instead of just ending the turn
+        BattleManager.instance.EndTurn();
     }
 }

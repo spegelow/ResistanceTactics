@@ -11,6 +11,9 @@ public class InputManager : MonoBehaviour
     List<MapTile> moveableTiles;
     Unit currentUnit;
 
+    public delegate void ActionDelegate(Unit unit, MapTile targetTile);
+    public ActionDelegate currentAction;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,15 +41,12 @@ public class InputManager : MonoBehaviour
     {
         if (currentUnit != null)
         {
+            //Validate the clicked tile
+            //TODO Generalize this code for any action, not just movement
             if (moveableTiles.Contains(tile))
             {
-                currentUnit.MoveToTile(tile);
-
-                currentUnit = null;
-                MapManager.instance.ClearTileHighlights();
                 moveableTiles.Clear();
-
-                BattleManager.instance.EndTurn();
+                currentAction(currentUnit, tile);
             }
         }
     }
