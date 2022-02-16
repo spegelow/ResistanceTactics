@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour
     {
         //Show current units movement range
         InputManager.instance.SetCurrentUnit(turnQueue[0]);
-        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles());
+        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles(), Color.green);
         InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
         InputManager.instance.inputState = InputManager.InputState.MovementSelection;
     }
@@ -74,7 +74,7 @@ public class BattleManager : MonoBehaviour
 
         //Resetup movement selection
         InputManager.instance.SetCurrentUnit(turnQueue[0]);
-        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles());
+        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles(), Color.green);
         InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
         InputManager.instance.inputState = InputManager.InputState.MovementSelection;
     }
@@ -92,12 +92,29 @@ public class BattleManager : MonoBehaviour
 
     public void ResolveAttack(Unit attacker, MapTile targetTile)
     {
-        Debug.Log(attacker.unitName + " attacked " + targetTile.occupant.unitName);
-        BattleManager.instance.EndTurn();
+        //Do an accuracy check
+        float aimCheck = Random.value;
+        if(aimCheck > attacker.accuracy)
+        {
+            //The attack missed
+            Debug.Log("The attack missed");
+            
+        }
+        else
+        {
+            //The attack hit, so let's determine damage
+            int baseDamage = Random.Range(attacker.minDamage, attacker.maxDamage + 1);
+
+            //Apply the damage to the target (if there is one?)
+            targetTile.occupant?.ApplyDamage(baseDamage);
+        }
+
+
+        EndTurn();
     }
 
     public void Wait(Unit unit, MapTile targetTile)
     {
-        BattleManager.instance.EndTurn();
+        EndTurn();
     }
 }

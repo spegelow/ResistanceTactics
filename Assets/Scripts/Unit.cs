@@ -101,6 +101,10 @@ public class Unit : MonoBehaviour
 
     public void ApplyDamage(int amount)
     {
+        currentHealth -= amount;
         OnHealthChanged.Invoke();
+
+        //TODO Check for death
+
     }
 }

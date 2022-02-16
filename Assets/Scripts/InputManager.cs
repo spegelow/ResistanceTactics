@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour
 
     public UnityEvent<Unit> OnUnitHovered;
 
+    public GameObject actionPanel;
+
     public delegate void ActionDelegate(Unit unit, MapTile targetTile);
     public ActionDelegate currentAction;
 
@@ -42,14 +44,13 @@ public class InputManager : MonoBehaviour
 
                 case InputState.ActionSelection:
                     //Undo the unit's movement
-                    //TODO
+                    actionPanel.SetActive(false);
                     BattleManager.instance.UndoMovement();
                     break;
 
                 case InputState.TargetSelection:
                     //Undo the action selection and show the action list again
-                    //TODO
-                    BattleManager.instance.UndoMovement();
+                    SetupActionSelection();
                     break;
             }
         }
@@ -124,24 +125,46 @@ public class InputManager : MonoBehaviour
         currentUnit = unit;
     }
 
-    public void SetSelectableTiles(List<MapTile> tiles)
+    public void SetSelectableTiles(List<MapTile> tiles, Color color)
     {
         selectableTiles = tiles;
 
         //Set highlighting for tiles
         MapManager.instance.ClearTileHighlights();
-        tiles.ForEach(tile => tile.SetHighlight(true));
+        tiles.ForEach(tile => tile.SetHighlight(color));
     }
 
     public void SetupActionSelection()
     {
+        actionPanel.SetActive(true);
+        MapManager.instance.ClearTileHighlights();
         inputState = InputState.ActionSelection;
+    }
 
-        //For now... I guess just skip this and say an action was selected??
-        SetCurrentUnit(BattleManager.instance.turnQueue[0]);
-        SetSelectableTiles(BattleManager.instance.turnQueue[0].GetAttackableTiles());
-        currentAction = BattleManager.instance.ResolveAttack; //Set the current action to MoveUnit
+    public void ActionButtonClicked(string actionName)
+    {
+        if(inputState != InputState.ActionSelection)
+        {
+            //How did we even click the button then???
+            Debug.LogError("Cannot select action when not in action selection state");
+            return;
+        }
 
-        inputState = InputState.TargetSelection;
+        if(actionName == "Wait")
+        {
+            //No target is needed for wait, so just call the battle manager
+            inputState = InputState.IgnoreInput;
+            BattleManager.instance.Wait(currentUnit, null);
+
+        }
+        else if(actionName == "Attack")
+        {
+            SetCurrentUnit(BattleManager.instance.turnQueue[0]);
+            SetSelectableTiles(BattleManager.instance.turnQueue[0].GetAttackableTiles(), Color.red);
+            currentAction = BattleManager.instance.ResolveAttack; //Set the current action to MoveUnit
+            inputState = InputState.TargetSelection;
+        }
+
+        actionPanel.SetActive(false);
     }
 }

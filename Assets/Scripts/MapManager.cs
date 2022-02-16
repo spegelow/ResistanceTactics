@@ -160,6 +160,6 @@ public class MapManager : MonoBehaviour
 
     public void ClearTileHighlights()
     {
-        mapTiles.ForEach(tile => tile.SetHighlight(false));
+        mapTiles.ForEach(tile => tile.ClearHighlight());
     }
 }

@@ -84,8 +84,14 @@ public class MapTile : MonoBehaviour
         return (occupant != null);
     }
 
-    public void SetHighlight(bool state)
+    public void SetHighlight(Color color)
     {
-        tileHighlight.SetActive(state);
+        tileHighlight.GetComponent<MeshRenderer>().material.color = color;
+        tileHighlight.SetActive(true);
+    }
+
+    public void ClearHighlight()
+    {
+        tileHighlight.SetActive(false);
     }
 }
