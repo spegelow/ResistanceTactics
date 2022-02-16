@@ -14,6 +14,6 @@ public class HealthText : MonoBehaviour
 
     public void UpdateUI(Unit unit)
     {
-        healthUI.text = "" + unit.currentHealth;
+        healthUI.text = "" + unit.currentHealth + "/" + unit.maxHealth;
     }
 }
