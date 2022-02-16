@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class InputManager : MonoBehaviour
 
     List<MapTile> selectableTiles;
     Unit currentUnit;
+
+    public UnityEvent<Unit> OnUnitHovered;
 
     public delegate void ActionDelegate(Unit unit, MapTile targetTile);
     public ActionDelegate currentAction;
@@ -40,11 +43,13 @@ public class InputManager : MonoBehaviour
                 case InputState.ActionSelection:
                     //Undo the unit's movement
                     //TODO
+                    BattleManager.instance.UndoMovement();
                     break;
 
                 case InputState.TargetSelection:
                     //Undo the action selection and show the action list again
                     //TODO
+                    BattleManager.instance.UndoMovement();
                     break;
             }
         }
@@ -56,7 +61,13 @@ public class InputManager : MonoBehaviour
         if (instance.currentCursorTile != tile)
         {
             instance.MoveCursor(tile);
+
+            if(tile.occupant != null)
+            {
+                OnUnitHovered.Invoke(tile.occupant);
+            }
         }
+
     }
 
     public void TileClicked(MapTile tile)

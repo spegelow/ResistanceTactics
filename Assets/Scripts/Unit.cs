@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Unit : MonoBehaviour
 {
     public MapTile currentTile;
+    public MapTile originalTile;//The tile this unit began movement on, used for undoing movement
     MapTile _previousTile;
 
     public string unitName;
@@ -55,9 +56,22 @@ public class Unit : MonoBehaviour
         }
 
         //Place the unit at the new tile
+        originalTile = currentTile;
         currentTile = newTile;
         newTile.occupant = this;
         this.transform.position = newTile.GetSurfacePosition();
+    }
+
+    public void UndoMovement()
+    {
+        //Remove this unit from the tile
+        currentTile.occupant = null;
+
+        //Place the unit at its previous tile
+        currentTile = originalTile;
+        originalTile = null;
+        currentTile.occupant = this;
+        this.transform.position = currentTile.GetSurfacePosition();
     }
 
     public List<MapTile> GetMoveableTiles()

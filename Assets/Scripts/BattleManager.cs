@@ -67,7 +67,17 @@ public class BattleManager : MonoBehaviour
         
     }
 
+    public void UndoMovement()
+    {
+        //Undo the units movement
+        turnQueue[0].UndoMovement();
 
+        //Resetup movement selection
+        InputManager.instance.SetCurrentUnit(turnQueue[0]);
+        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles());
+        InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
+        InputManager.instance.inputState = InputManager.InputState.MovementSelection;
+    }
 
     public void MoveUnit(Unit unit, MapTile targetTile)
     {
@@ -83,6 +93,11 @@ public class BattleManager : MonoBehaviour
     public void ResolveAttack(Unit attacker, MapTile targetTile)
     {
         Debug.Log(attacker.unitName + " attacked " + targetTile.occupant.unitName);
+        BattleManager.instance.EndTurn();
+    }
+
+    public void Wait(Unit unit, MapTile targetTile)
+    {
         BattleManager.instance.EndTurn();
     }
 }
