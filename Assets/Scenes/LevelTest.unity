@@ -9945,6 +9945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b4692365b27404f93fdd1e4730c501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthUI: {fileID: 426383415}
 --- !u!114 &426383415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17475,7 +17476,39 @@ PrefabInstance:
       objectReference: {fileID: 973390124}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: currentHealth
-      value: 6
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 426383414}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: HealthText, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 84698393}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: OnHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Unit, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}

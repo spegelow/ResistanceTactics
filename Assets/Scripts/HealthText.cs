@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMpro; 
+using TMPro; 
 
 public class HealthText : MonoBehaviour
 {
+    public TMP_Text healthUI;
+
     void Start ()
     {
 
@@ -12,6 +14,6 @@ public class HealthText : MonoBehaviour
 
     public void UpdateUI(Unit unit)
     {
-        HealthUI.text = unit.currentHealth;
+        healthUI.text = "" + unit.currentHealth;
     }
 }

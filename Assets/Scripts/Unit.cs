@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
@@ -24,10 +25,13 @@ public class Unit : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
+    [Header("Events")]
+    public UnityEvent OnHealthChanged;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        OnHealthChanged.Invoke();
     }
 
     // Update is called once per frame
@@ -66,7 +70,10 @@ public class Unit : MonoBehaviour
         return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, minAttackRange, maxAttackRange);
     }
 
-
+    public bool IsValidTarget(MapTile tile)
+    {
+        return tile.occupant != null && tile.occupant.team != team;
+    }
 
     private void OnValidate()
     {
@@ -76,5 +83,10 @@ public class Unit : MonoBehaviour
             _previousTile = currentTile;
             MoveToTile(currentTile);
         }
+    }
+
+    public void ApplyDamage(int amount)
+    {
+        OnHealthChanged.Invoke();
     }
 }

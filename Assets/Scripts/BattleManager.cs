@@ -30,6 +30,7 @@ public class BattleManager : MonoBehaviour
         InputManager.instance.SetCurrentUnit(turnQueue[0]);
         InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles());
         InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
+        InputManager.instance.inputState = InputManager.InputState.MovementSelection;
     }
 
     public void EndTurn()
@@ -74,8 +75,14 @@ public class BattleManager : MonoBehaviour
 
         unit = null;
         MapManager.instance.ClearTileHighlights();
-        
+
         //TODO Set up action input instead of just ending the turn
+        InputManager.instance.SetupActionSelection();
+    }
+
+    public void ResolveAttack(Unit attacker, MapTile targetTile)
+    {
+        Debug.Log(attacker.unitName + " attacked " + targetTile.occupant.unitName);
         BattleManager.instance.EndTurn();
     }
 }

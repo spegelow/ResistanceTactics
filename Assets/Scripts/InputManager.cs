@@ -14,6 +14,10 @@ public class InputManager : MonoBehaviour
     public delegate void ActionDelegate(Unit unit, MapTile targetTile);
     public ActionDelegate currentAction;
 
+
+    public enum InputState { MovementSelection, ActionSelection, TargetSelection, IgnoreInput}
+    public InputState inputState;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,7 +29,25 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(1))
+        {
+            switch (inputState)
+            {
+                case InputState.MovementSelection:
+                    //No effect when selecting movement
+                    break;
+
+                case InputState.ActionSelection:
+                    //Undo the unit's movement
+                    //TODO
+                    break;
+
+                case InputState.TargetSelection:
+                    //Undo the action selection and show the action list again
+                    //TODO
+                    break;
+            }
+        }
     }
 
     public void TileHovered(MapTile tile)
@@ -39,16 +61,40 @@ public class InputManager : MonoBehaviour
 
     public void TileClicked(MapTile tile)
     {
-        if (currentUnit != null)
+        switch (inputState)
         {
-            //Validate the clicked tile
-            //TODO Generalize this code for any action, not just movement
-            if (selectableTiles.Contains(tile))
-            {
-                selectableTiles.Clear();
-                currentAction(currentUnit, tile);
-            }
+            case InputState.MovementSelection:
+                //Move the unit to the selected tile if it is valid
+                if (currentUnit != null)
+                {
+                    //Validate the clicked tile
+                    if (selectableTiles.Contains(tile))
+                    {
+                        selectableTiles.Clear();
+                        currentAction(currentUnit, tile);
+                    }
+                }
+                break;
+
+            case InputState.ActionSelection:
+                //Do nothing? They need to select an action first
+                //TODO
+                break;
+
+            case InputState.TargetSelection:
+                //Activate the currentAction targeting the selected tile if it is valid
+                if (currentUnit != null)
+                {
+                    //Validate the clicked tile
+                    if (selectableTiles.Contains(tile) && currentUnit.IsValidTarget(tile))
+                    {
+                        selectableTiles.Clear();
+                        currentAction(currentUnit, tile);
+                    }
+                }
+                break;
         }
+        
     }
 
 
@@ -74,5 +120,17 @@ public class InputManager : MonoBehaviour
         //Set highlighting for tiles
         MapManager.instance.ClearTileHighlights();
         tiles.ForEach(tile => tile.SetHighlight(true));
+    }
+
+    public void SetupActionSelection()
+    {
+        inputState = InputState.ActionSelection;
+
+        //For now... I guess just skip this and say an action was selected??
+        SetCurrentUnit(BattleManager.instance.turnQueue[0]);
+        SetSelectableTiles(BattleManager.instance.turnQueue[0].GetAttackableTiles());
+        currentAction = BattleManager.instance.ResolveAttack; //Set the current action to MoveUnit
+
+        inputState = InputState.TargetSelection;
     }
 }
