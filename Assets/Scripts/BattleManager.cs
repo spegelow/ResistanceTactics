@@ -30,10 +30,18 @@ public class BattleManager : MonoBehaviour
     public void StartTurn()
     {
         //Show current units movement range
-        InputManager.instance.SetCurrentUnit(turnQueue[0]);
-        InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles(), Color.green);
-        InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
-        InputManager.instance.inputState = InputManager.InputState.MovementSelection;
+        Unit currentUnit = turnQueue[0];
+        if (currentUnit.isAIControlled)
+        {
+            StartCoroutine(currentUnit.unitAI.BeginTurn());
+        }
+        else //Player Controlled
+        {
+            InputManager.instance.SetCurrentUnit(currentUnit);
+            InputManager.instance.SetSelectableTiles(currentUnit.GetMoveableTiles(), Color.green);
+            InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
+            InputManager.instance.inputState = InputManager.InputState.MovementSelection;
+        }
     }
 
     public void EndTurn()
@@ -89,11 +97,16 @@ public class BattleManager : MonoBehaviour
     {
         unit.MoveToTile(targetTile);
 
-        unit = null;
+        //unit = null;????Why was this a thing
         MapManager.instance.ClearTileHighlights();
 
         //TODO Set up action input instead of just ending the turn
         InputManager.instance.SetupActionSelection();
+    }
+
+    public void AIMoveUnit(Unit unit, MapTile targetTile)
+    {
+        unit.MoveToTile(targetTile);
     }
 
     public void ResolveAttack(Unit attacker, MapTile targetTile)

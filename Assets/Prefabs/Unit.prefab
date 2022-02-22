@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1463752448992135254}
   - component: {fileID: 4863608234071097668}
+  - component: {fileID: 1349345736789071047}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -138,6 +139,8 @@ MonoBehaviour:
   accuracy: 0.75
   maxHealth: 10
   currentHealth: 10
+  isAIControlled: 0
+  unitAI: {fileID: 1349345736789071047}
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls:
@@ -153,6 +156,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1349345736789071047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833772774635031315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd944f8e9564eae40a3c358dc105558a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 4863608234071097668}
 --- !u!1 &7595446033005505702
 GameObject:
   m_ObjectHideFlags: 0

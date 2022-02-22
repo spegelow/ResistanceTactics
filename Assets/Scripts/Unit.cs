@@ -26,6 +26,11 @@ public class Unit : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
+    [Header("AI Settings")]
+    public bool isAIControlled;
+    public UnitAI unitAI;
+
+
     [Header("Events")]
     public UnityEvent OnHealthChanged;
 
@@ -43,6 +48,12 @@ public class Unit : MonoBehaviour
 
     public void MoveToTile(MapTile newTile)
     {
+        if(newTile == currentTile)
+        {
+            //Nothing needed
+            return;
+        }
+
         if(newTile.IsOccupied())
         {
             Debug.LogError("Cannot move to an occupied tile");
@@ -107,4 +118,33 @@ public class Unit : MonoBehaviour
         //TODO Check for death
 
     }
+
+
+
+    #region Helper Methods
+    //These methods are mainly used by AI to assist in decision making and data access
+    public int MovementRequiredToGetInRange(Unit target)
+    {
+        //TODO Actually check range, for now simply do taxi cab distance
+        return Mathf.Abs(target.currentTile.x - currentTile.x) + Mathf.Abs(target.currentTile.z - currentTile.z);
+    }
+
+    //public int MovementRequiredToReachTile(MapTile tile)
+    //{
+    //    //TODO Actually check movement logic, for now simply do taxi cab distance
+    //    return Mathf.Abs(tile.x - currentTile.x) + Mathf.Abs(tile.z - currentTile.z);
+    //}
+
+    public int MovementRequiredToReachTile(MapTile tile)
+    {
+        //TODO Actually check movement logic, for now simply do taxi cab distance
+        return Mathf.Abs(tile.x - currentTile.x) + Mathf.Abs(tile.z - currentTile.z);
+    }
+
+    public List<Unit> GetAllEnemies()
+    {
+        return BattleManager.instance.units.FindAll(unit => unit.team != this.team);
+    }
+    #endregion
+
 }
