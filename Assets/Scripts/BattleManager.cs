@@ -8,7 +8,7 @@ public class BattleManager : MonoBehaviour
     public static BattleManager instance;
 
     public List<Unit> turnQueue;
-    public bool randomizeUnitsOnStart;
+    public bool randomizeTurnOrderOnStart;
     public List<Unit> units;
 
     public UnityEvent<List<Unit>> OnTurnQueueUpdated;
@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour
     public void StartBattle()
     {
         //If necessary, randomize the unit list order
-        if (randomizeUnitsOnStart)
+        if (randomizeTurnOrderOnStart)
         {
             units.Sort((a, b) => Random.Range(-1, 2));
         }
