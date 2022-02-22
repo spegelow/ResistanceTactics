@@ -132,6 +132,11 @@ public class BattleManager : MonoBehaviour
         EndTurn();
     }
 
+    public static Unit GetCurrentUnit()
+    {
+        return instance.turnQueue[0];
+    }
+
     public void Wait(Unit unit, MapTile targetTile)
     {
         EndTurn();

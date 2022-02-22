@@ -13,6 +13,10 @@ public class InputManager : MonoBehaviour
     Unit currentUnit;
 
     public UnityEvent<Unit> OnUnitHovered;
+    public UnityEvent<Unit> OnUnitHoveredTargeting;
+    public UnityEvent OnTargetingStart;
+    public UnityEvent OnTargetingEnd;
+
 
     public GameObject actionPanel;
 
@@ -51,6 +55,7 @@ public class InputManager : MonoBehaviour
                 case InputState.TargetSelection:
                     //Undo the action selection and show the action list again
                     SetupActionSelection();
+                    OnTargetingEnd.Invoke();
                     break;
             }
         }
@@ -65,6 +70,11 @@ public class InputManager : MonoBehaviour
 
             if(tile.occupant != null)
             {
+                if (inputState == InputState.TargetSelection)
+                {
+                    OnUnitHoveredTargeting.Invoke(tile.occupant);
+                }
+
                 OnUnitHovered.Invoke(tile.occupant);
             }
         }
@@ -100,6 +110,7 @@ public class InputManager : MonoBehaviour
                     //Validate the clicked tile
                     if (selectableTiles.Contains(tile) && currentUnit.IsValidTarget(tile))
                     {
+                        OnTargetingEnd.Invoke();
                         selectableTiles.Clear();
                         currentAction(currentUnit, tile);
                     }
@@ -163,6 +174,7 @@ public class InputManager : MonoBehaviour
             SetSelectableTiles(BattleManager.instance.turnQueue[0].GetAttackableTiles(), Color.red);
             currentAction = BattleManager.instance.ResolveAttack; //Set the current action to MoveUnit
             inputState = InputState.TargetSelection;
+            OnTargetingStart.Invoke();
         }
 
         actionPanel.SetActive(false);
