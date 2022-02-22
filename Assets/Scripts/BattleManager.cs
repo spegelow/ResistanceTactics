@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BattleManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class BattleManager : MonoBehaviour
 
     public List<Unit> turnQueue;
     public List<Unit> units;
+
+    public UnityEvent<List<Unit>> OnTurnQueueUpdated;
 
     public void Awake()
     {
@@ -19,7 +22,7 @@ public class BattleManager : MonoBehaviour
         //Build the turn queue
         turnQueue = new List<Unit>();
         units.ForEach(unit => turnQueue.Add(unit));
-
+        OnTurnQueueUpdated.Invoke(turnQueue);
         //Start the first turn
         StartTurn();
     }
@@ -53,6 +56,9 @@ public class BattleManager : MonoBehaviour
             units.ForEach(unit => turnQueue.Add(unit));
             StartTurn();
         }
+
+
+        OnTurnQueueUpdated.Invoke(turnQueue);
     }
 
     // Start is called before the first frame update
