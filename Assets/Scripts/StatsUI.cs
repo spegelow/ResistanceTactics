@@ -15,6 +15,6 @@ public class StatsUI : MonoBehaviour
 
     public void UpdateUI(Unit unit)
     {
-        statsUI.text = "" + unit.unitName + "\n Movement " + unit.movementRange + "\n Min Range" + unit.minAttackRange + "\n Max Range" + unit.maxAttackRange + "\n Min Damage" + unit.minDamage + "\n Max Damage" + unit.maxDamage + "\n Accuracy" + unit.accuracy;
+        statsUI.text = "" + unit.unitName + "\n Movement " + unit.movementRange + "\n Min Range " + unit.minAttackRange + "\n Max Range " + unit.maxAttackRange + "\n Min Damage " + unit.minDamage + "\n Max Damage " + unit.maxDamage + "\n Accuracy " + unit.accuracy;
     }
 }

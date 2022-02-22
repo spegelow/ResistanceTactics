@@ -50898,6 +50898,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battle UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7588419204594991626, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7588419204594991626, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
+      propertyPath: m_margin.x
+      value: -349.34418
+      objectReference: {fileID: 0}
+    - target: {fileID: 7588419204594991626, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
+      propertyPath: m_margin.z
+      value: -112.516785
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
 --- !u!1001 &8741293603008191010
