@@ -83,7 +83,7 @@ public class UnitAI : MonoBehaviour
             //Find the tile closest to the ideal target
             moveableTiles.Sort((a, b) =>
             {
-                int ret = unit.MovementRequiredToReachTile(a).CompareTo(unit.MovementRequiredToReachTile(b));
+                int ret = unit.MovementRequiredToReachTile(a, idealTarget.currentTile).CompareTo(unit.MovementRequiredToReachTile(b, idealTarget.currentTile));
                 return ret;
             });
 

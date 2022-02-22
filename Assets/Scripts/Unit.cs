@@ -135,10 +135,10 @@ public class Unit : MonoBehaviour
     //    return Mathf.Abs(tile.x - currentTile.x) + Mathf.Abs(tile.z - currentTile.z);
     //}
 
-    public int MovementRequiredToReachTile(MapTile tile)
+    public int MovementRequiredToReachTile(MapTile tile, MapTile otherTile)
     {
         //TODO Actually check movement logic, for now simply do taxi cab distance
-        return Mathf.Abs(tile.x - currentTile.x) + Mathf.Abs(tile.z - currentTile.z);
+        return Mathf.Abs(tile.x - otherTile.x) + Mathf.Abs(tile.z - otherTile.z);
     }
 
     public List<Unit> GetAllEnemies()
