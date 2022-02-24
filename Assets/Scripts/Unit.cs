@@ -92,7 +92,17 @@ public class Unit : MonoBehaviour
 
     public List<MapTile> GetAttackableTiles()
     {
-        return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, minAttackRange, maxAttackRange);
+        List<MapTile> targetableTiles = MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, minAttackRange, maxAttackRange);
+
+        //Only return the tiles in line of sight
+        return targetableTiles.FindAll(tile => CanSeeTile(tile));
+    
+    }
+
+    public bool CanSeeTile(MapTile tile)
+    {
+        Vector3 attackOffset = new Vector3(0, 1.5f, 0);//Used to check line of sight from roughly the units face
+        return !Physics.Linecast(this.currentTile.GetSurfacePosition() + attackOffset, tile.GetSurfacePosition() + attackOffset);
     }
 
     public bool IsValidTarget(MapTile tile)
