@@ -53,7 +53,16 @@ public class BattleManager : MonoBehaviour
     public void EndTurn()
     {
         //Remove the current unit from the queue
-        turnQueue.RemoveAt(0);
+        if (turnQueue.Count > 0)
+        {
+            turnQueue.RemoveAt(0);
+        }
+
+        if(IsBattleDone())
+        {
+            HandleBattleEnd();
+            return;
+        }
 
         //Check if there are any units left for this round
         if(turnQueue.Count > 0)
@@ -67,7 +76,13 @@ public class BattleManager : MonoBehaviour
             //TODO END ROUND
             //TEMP simply rebuild the queue and start a new turn
             turnQueue = new List<Unit>();
-            units.ForEach(unit => turnQueue.Add(unit));
+            units.ForEach(unit =>
+            {
+                if (unit.IsAlive())
+                {
+                    turnQueue.Add(unit);
+                }
+            });
             StartTurn();
         }
 
@@ -147,4 +162,40 @@ public class BattleManager : MonoBehaviour
     {
         EndTurn();
     }
+
+    public bool IsBattleDone()
+    {
+        int remainingTeam = -1;
+        bool isBattleDone = true;
+        units.ForEach(unit =>
+        {
+            //Is this unit alive?
+            if (isBattleDone && unit.IsAlive())
+            {
+                //If we haven't found another team left yet, save this team
+                if (remainingTeam == -1)
+                {
+                    remainingTeam = unit.team;
+                }
+                else if (remainingTeam != unit.team)
+                {
+                    //We found two different teams so battle isn't done
+                    isBattleDone = false;
+                }
+            }
+        });
+
+        return isBattleDone;
+    }
+
+    public void HandleBattleEnd()
+    {
+        int winningTeam = -1;
+
+        //Should only be one team left, so just find the first unit that is alive and grab its team
+        winningTeam = units.Find(unit => unit.IsAlive()).team;
+
+        Debug.Log("Team #" + winningTeam + " won the match");
+    }
+
 }

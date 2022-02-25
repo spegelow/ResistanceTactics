@@ -125,8 +125,29 @@ public class Unit : MonoBehaviour
         currentHealth -= amount;
         OnHealthChanged.Invoke();
 
-        //TODO Check for death
+        //Check for and handle death
+        if(currentHealth <= 0)
+        {
+            HandleDeath();
+        }
+    }
 
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
+
+    public void HandleDeath()
+    {
+        //Remove this unit from the turn queue if they are there
+        BattleManager.instance.turnQueue.Remove(this);
+        BattleManager.instance.OnTurnQueueUpdated.Invoke(BattleManager.instance.turnQueue);
+
+        //Remove this unit from its tile
+        currentTile.occupant = null;
+
+        //Disable this game object
+        this.gameObject.SetActive(false);
     }
 
 
@@ -153,7 +174,7 @@ public class Unit : MonoBehaviour
 
     public List<Unit> GetAllEnemies()
     {
-        return BattleManager.instance.units.FindAll(unit => unit.team != this.team);
+        return BattleManager.instance.units.FindAll(unit => unit.team != this.team && unit.IsAlive());
     }
     #endregion
 
