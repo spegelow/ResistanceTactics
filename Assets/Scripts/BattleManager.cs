@@ -13,6 +13,9 @@ public class BattleManager : MonoBehaviour
 
     public UnityEvent<List<Unit>> OnTurnQueueUpdated;
 
+    public GameObject floatingDamageTextPrefab;
+    Vector3 damageTextOffset = new Vector3(0, 1, 0);
+
     public void Awake()
     {
         instance = this;
@@ -146,11 +149,20 @@ public class BattleManager : MonoBehaviour
             int baseDamage = Random.Range(attacker.minDamage, attacker.maxDamage + 1);
 
             //Apply the damage to the target (if there is one?)
+            CreateDamageText(targetTile.occupant, baseDamage);
             targetTile.occupant?.ApplyDamage(baseDamage);
         }
 
 
         EndTurn();
+    }
+
+    public void CreateDamageText(Unit target, int damage)
+    {
+        GameObject newObject = GameObject.Instantiate(floatingDamageTextPrefab, target.transform.position + damageTextOffset, Quaternion.identity);
+        FloatingDamageText text = newObject.GetComponent<FloatingDamageText>();
+
+        text.InitializeDamageText(damage);
     }
 
     public static Unit GetCurrentUnit()

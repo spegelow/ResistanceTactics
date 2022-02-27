@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnQueue: []
+  randomizeTurnOrderOnStart: 0
   units:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  OnTurnQueueUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  floatingDamageTextPrefab: {fileID: 7817130726847000244, guid: 97db3e6c8f46b4342af21d1717018e12, type: 3}
