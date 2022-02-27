@@ -14,6 +14,8 @@ public class Unit : MonoBehaviour
     public int team;
 
     public int movementRange;
+
+    public int maxVerticalMovement = 1;
     
     public int minAttackRange;
     public int maxAttackRange;
@@ -87,7 +89,8 @@ public class Unit : MonoBehaviour
 
     public List<MapTile> GetMoveableTiles()
     {
-        return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, movementRange);
+        return Pathfinder.GetMoveableTiles(this);
+        //return MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, movementRange);
     }
 
     public List<MapTile> GetAttackableTiles()

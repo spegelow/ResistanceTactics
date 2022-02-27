@@ -94,4 +94,9 @@ public class MapTile : MonoBehaviour
     {
         tileHighlight.SetActive(false);
     }
+
+    public List<MapTile> GetNeighbors()
+    {
+        return MapManager.instance.GetTilesInRange(x, z, 1, 1);
+    }
 }
