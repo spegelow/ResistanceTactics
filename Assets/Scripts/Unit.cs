@@ -150,7 +150,18 @@ public class Unit : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public IEnumerator AnimateMovement(MapTile destination)
+    {
+        float moveSpeed = 3f;
 
+        while (this.transform.position != destination.GetSurfacePosition())
+        {
+            //Just translate towards the destination each frame until we are at the correct position
+            this.transform.position = Vector3.MoveTowards(this.transform.position, destination.GetSurfacePosition(), Time.deltaTime * moveSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+
+    }
 
     #region Helper Methods
     //These methods are mainly used by AI to assist in decision making and data access

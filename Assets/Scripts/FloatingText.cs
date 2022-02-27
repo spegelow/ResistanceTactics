@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class FloatingDamageText : MonoBehaviour
+public class FloatingText : MonoBehaviour
 {
     public TMP_Text damageText;
     public float lifespan = 1.5f;
@@ -36,5 +36,10 @@ public class FloatingDamageText : MonoBehaviour
     public void InitializeDamageText(int damage)
     {
         damageText.text = "" + damage;
+    }
+
+    public void InitializeFloatingText(string text)
+    {
+        damageText.text = "" + text;
     }
 }

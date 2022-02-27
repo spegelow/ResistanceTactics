@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
 
     public GameObject actionPanel;
 
-    public delegate void ActionDelegate(Unit unit, MapTile targetTile);
+    public delegate IEnumerator ActionDelegate(Unit unit, MapTile targetTile);
     public ActionDelegate currentAction;
 
 
@@ -93,7 +93,8 @@ public class InputManager : MonoBehaviour
                     if (selectableTiles.Contains(tile))
                     {
                         selectableTiles.Clear();
-                        currentAction(currentUnit, tile);
+                        inputState = InputState.IgnoreInput;
+                        StartCoroutine(currentAction(currentUnit, tile));
                     }
                 }
                 break;
@@ -112,7 +113,7 @@ public class InputManager : MonoBehaviour
                     {
                         OnTargetingEnd.Invoke();
                         selectableTiles.Clear();
-                        currentAction(currentUnit, tile);
+                        StartCoroutine(currentAction(currentUnit, tile));
                     }
                 }
                 break;

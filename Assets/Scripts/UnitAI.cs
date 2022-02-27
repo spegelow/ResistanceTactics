@@ -55,7 +55,7 @@ public class UnitAI : MonoBehaviour
             //No movement is needed so don't move
             //Just attack that target
             yield return new WaitForSeconds(1);
-            BattleManager.instance.ResolveAttack(unit, idealTarget.currentTile);
+            yield return StartCoroutine(BattleManager.instance.ResolveAttack(unit, idealTarget.currentTile));
         }
         else
         {
@@ -93,7 +93,7 @@ public class UnitAI : MonoBehaviour
             //Now check if our target is in range. If so, attack them. If not, end turn
             if (unit.GetAttackableTiles().Contains(idealTarget.currentTile))
             {
-                BattleManager.instance.ResolveAttack(unit, idealTarget.currentTile);
+                yield return StartCoroutine(BattleManager.instance.ResolveAttack(unit, idealTarget.currentTile));
             }
             else
             {

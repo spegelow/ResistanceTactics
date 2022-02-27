@@ -117,12 +117,17 @@ public class BattleManager : MonoBehaviour
         InputManager.instance.inputState = InputManager.InputState.MovementSelection;
     }
 
-    public void MoveUnit(Unit unit, MapTile targetTile)
+    public IEnumerator MoveUnit(Unit unit, MapTile targetTile)
     {
+        MapManager.instance.ClearTileHighlights();
+
+        //Animate the units movement
+        yield return StartCoroutine(unit.AnimateMovement(targetTile));
+
+        //TODO Add the ability to skip movement animations
         unit.MoveToTile(targetTile);
 
         //unit = null;????Why was this a thing
-        MapManager.instance.ClearTileHighlights();
 
         //TODO Set up action input instead of just ending the turn
         InputManager.instance.SetupActionSelection();
@@ -133,15 +138,16 @@ public class BattleManager : MonoBehaviour
         unit.MoveToTile(targetTile);
     }
 
-    public void ResolveAttack(Unit attacker, MapTile targetTile)
+    public IEnumerator ResolveAttack(Unit attacker, MapTile targetTile)
     {
+        yield return new WaitForEndOfFrame();
         //Do an accuracy check
         float aimCheck = Random.value;
         if(aimCheck > attacker.accuracy)
         {
-            //The attack missed
-            Debug.Log("The attack missed");
-            
+            CreateFloatingText(targetTile.occupant, "MISS!");
+            yield return new WaitForSeconds(1);
+
         }
         else
         {
@@ -150,6 +156,7 @@ public class BattleManager : MonoBehaviour
 
             //Apply the damage to the target (if there is one?)
             CreateDamageText(targetTile.occupant, baseDamage);
+            yield return new WaitForSeconds(1);
             targetTile.occupant?.ApplyDamage(baseDamage);
         }
 
@@ -160,9 +167,17 @@ public class BattleManager : MonoBehaviour
     public void CreateDamageText(Unit target, int damage)
     {
         GameObject newObject = GameObject.Instantiate(floatingDamageTextPrefab, target.transform.position + damageTextOffset, Quaternion.identity);
-        FloatingDamageText text = newObject.GetComponent<FloatingDamageText>();
+        FloatingText text = newObject.GetComponent<FloatingText>();
 
         text.InitializeDamageText(damage);
+    }
+
+    public void CreateFloatingText(Unit target, string message)
+    {
+        GameObject newObject = GameObject.Instantiate(floatingDamageTextPrefab, target.transform.position + damageTextOffset, Quaternion.identity);
+        FloatingText text = newObject.GetComponent<FloatingText>();
+
+        text.InitializeFloatingText(message);
     }
 
     public static Unit GetCurrentUnit()
