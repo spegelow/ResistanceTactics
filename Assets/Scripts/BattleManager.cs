@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class BattleManager : MonoBehaviour
 
     public GameObject floatingDamageTextPrefab;
     Vector3 damageTextOffset = new Vector3(0, 1, 0);
+
+    public GameObject endGameUIPanel;
+    public TMP_Text endGameMessage;
 
     public void Awake()
     {
@@ -222,7 +227,15 @@ public class BattleManager : MonoBehaviour
         //Should only be one team left, so just find the first unit that is alive and grab its team
         winningTeam = units.Find(unit => unit.IsAlive()).team;
 
-        Debug.Log("Team #" + winningTeam + " won the match");
+        //TEMP For now assume the player is team 0
+        //Enable the end game panel and message
+        endGameUIPanel.SetActive(true);
+        endGameMessage.text = (winningTeam == 0) ? "~ Victory ~" : "~ Defeat ~";
+
     }
 
+    public void RestartBattle()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

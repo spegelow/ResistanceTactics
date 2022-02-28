@@ -155,7 +155,7 @@ public class Unit : MonoBehaviour
 
     public IEnumerator AnimateMovement(MapTile destination)
     {
-        float moveSpeed = 3f;
+        float moveSpeed = 10f;
 
         while (this.transform.position != destination.GetSurfacePosition())
         {
