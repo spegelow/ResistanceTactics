@@ -11,6 +11,8 @@ public class BattleManager : MonoBehaviour
 
     public List<Unit> turnQueue;
     public bool randomizeTurnOrderOnStart;
+    [Tooltip("Can only use with 2 teams of equal size")]
+    public bool alternateTeamsOnStart;
     public List<Unit> units;
 
     public UnityEvent<List<Unit>> OnTurnQueueUpdated;
@@ -31,8 +33,41 @@ public class BattleManager : MonoBehaviour
         //If necessary, randomize the unit list order
         if (randomizeTurnOrderOnStart)
         {
-            units.Sort((a, b) => Random.Range(-1, 2));
+            int r;
+            Unit swapUnit;
+            for (int i = 0; i < units.Count; i++)
+            {
+                r = Random.Range(0, units.Count);
+                swapUnit = units[r];
+                units[r] = units[i];
+                units[i] = swapUnit;
+            }
         }
+
+        if(alternateTeamsOnStart)
+        {
+            List<Unit> firstTeam = new List<Unit>();
+            List<Unit> otherTeam = new List<Unit>();
+
+            firstTeam = units.FindAll(u => u.team == 0);
+            otherTeam = units.FindAll(u => u.team != 0);
+
+            if (firstTeam.Count != otherTeam.Count)
+            {
+                Debug.LogError("Cannot alternate teams unless they are two teams of equal size");
+            }
+            else
+            {
+                units.Clear();
+                for (int i = 0; i<firstTeam.Count; i++)
+                {
+                    units.Add(firstTeam[i]);
+                    units.Add(otherTeam[i]);
+                }
+
+            }
+        }
+
         //Build the turn queue
         turnQueue = new List<Unit>();
         units.ForEach(unit => turnQueue.Add(unit));
