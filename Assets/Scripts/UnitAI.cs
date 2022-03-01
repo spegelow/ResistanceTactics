@@ -88,8 +88,7 @@ public class UnitAI : MonoBehaviour
             });
 
             //Actually move to that tile
-            BattleManager.instance.AIMoveUnit(unit, moveableTiles[0]);
-            yield return new WaitForSeconds(1);
+            yield return BattleManager.instance.MoveUnit(unit, moveableTiles[0], false);
             //Now check if our target is in range. If so, attack them. If not, end turn
             if (unit.GetAttackableTiles().Contains(idealTarget.currentTile))
             {

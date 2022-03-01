@@ -50,13 +50,13 @@ public class Unit : MonoBehaviour
 
     public void MoveToTile(MapTile newTile)
     {
-        if(newTile == currentTile)
-        {
-            //Nothing needed
-            return;
-        }
+        //if(newTile == currentTile)
+        //{
+        //    //Nothing needed
+        //    return;
+        //}
 
-        if(newTile.IsOccupied())
+        if(newTile.IsOccupied() && newTile.occupant != this)
         {
             Debug.LogError("Cannot move to an occupied tile");
             return;

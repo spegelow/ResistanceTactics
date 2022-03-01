@@ -133,6 +133,11 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator MoveUnit(Unit unit, MapTile targetTile)
     {
+        yield return MoveUnit(unit, targetTile, true);
+    }
+
+    public IEnumerator MoveUnit(Unit unit, MapTile targetTile, bool setupActions)
+    {
         MapManager.instance.ClearTileHighlights();
 
         //Animate the units movement
@@ -143,13 +148,10 @@ public class BattleManager : MonoBehaviour
 
         //unit = null;????Why was this a thing
 
-        //TODO Set up action input instead of just ending the turn
-        InputManager.instance.SetupActionSelection();
-    }
-
-    public void AIMoveUnit(Unit unit, MapTile targetTile)
-    {
-        unit.MoveToTile(targetTile);
+        if (setupActions)
+        {
+            InputManager.instance.SetupActionSelection();
+        }
     }
 
     public IEnumerator ResolveAttack(Unit attacker, MapTile targetTile)
