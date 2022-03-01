@@ -191,6 +191,7 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator ResolveAttack(Unit attacker, MapTile targetTile)
     {
+        MapManager.instance.ClearTileHighlights();
         yield return new WaitForEndOfFrame();
         //Do an accuracy check
         float aimCheck = Random.value;
