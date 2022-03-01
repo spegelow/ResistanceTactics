@@ -11144,7 +11144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: unitName
-      value: Crikey
+      value: C
       objectReference: {fileID: 0}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: currentTile
@@ -17359,7 +17359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: unitName
-      value: Apple
+      value: A
       objectReference: {fileID: 0}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: currentTile
@@ -19626,7 +19626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: unitName
-      value: Boobos
+      value: B
       objectReference: {fileID: 0}
     - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
       propertyPath: currentTile
@@ -51553,6 +51553,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 490614088, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 474
+      objectReference: {fileID: 0}
+    - target: {fileID: 490614088, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -122
+      objectReference: {fileID: 0}
+    - target: {fileID: 490614090, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 954686123617037456, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -51567,7 +51579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2771599459748471170, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3153859709292443766, guid: c66fc54bdb898844fb163a329d96eb4b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
