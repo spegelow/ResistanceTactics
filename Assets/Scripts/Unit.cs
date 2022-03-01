@@ -119,7 +119,17 @@ public class Unit : MonoBehaviour
         if(currentTile != _previousTile && !Application.isPlaying)
         {
             _previousTile = currentTile;
-            MoveToTile(currentTile);
+
+            //Remove this unit from the previous tile
+            if (currentTile != null)
+            {
+                currentTile.occupant = null;
+            }
+
+            //Place the unit at the new tile
+            originalTile = currentTile;
+            currentTile.occupant = this;
+            this.transform.position = currentTile.GetSurfacePosition();
         }
     }
 
