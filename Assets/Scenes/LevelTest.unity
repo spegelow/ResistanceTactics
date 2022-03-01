@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 121535750}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 371630515}
   x: 6
   z: 14
@@ -1602,7 +1602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 383071215}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1577368615}
   x: 12
   z: 9
@@ -1841,7 +1841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 3
-  occupant: {fileID: 1332443407}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 252687676}
   x: 2
   z: 10
@@ -3509,7 +3509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 2
-  occupant: {fileID: 121535750}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 831405248}
   x: 6
   z: 15
@@ -8498,7 +8498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 3
-  occupant: {fileID: 1332443407}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 531521155}
   x: 2
   z: 9
@@ -11154,6 +11154,10 @@ PrefabInstance:
       propertyPath: originalTile
       value: 
       objectReference: {fileID: 549683670}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: isAIControlled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
 --- !u!1 &485425526
@@ -13284,7 +13288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 383071215}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1516048204}
   x: 13
   z: 0
@@ -14697,7 +14701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 3
-  occupant: {fileID: 435228454}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1187953182}
   x: 10
   z: 13
@@ -15444,7 +15448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 1947661099}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 522137950}
   x: 3
   z: 1
@@ -15558,7 +15562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 383071215}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 2029744350}
   x: 15
   z: 1
@@ -17365,6 +17369,10 @@ PrefabInstance:
       propertyPath: originalTile
       value: 
       objectReference: {fileID: 1522429395}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: isAIControlled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
 --- !u!1 &705507993
@@ -19248,7 +19256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 383071215}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 617387633}
   x: 12
   z: 2
@@ -19628,6 +19636,10 @@ PrefabInstance:
       propertyPath: originalTile
       value: 
       objectReference: {fileID: 1727342425}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: isAIControlled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
 --- !u!4 &780378238 stripped
@@ -21795,7 +21807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 6
-  occupant: {fileID: 1721436752}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1536857579}
   x: 0
   z: 14
@@ -23414,7 +23426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 1294915654}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 705893819}
   x: 13
   z: 12
@@ -24146,7 +24158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 4
-  occupant: {fileID: 84698393}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 466252184}
   x: 1
   z: 11
@@ -26881,7 +26893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 383071215}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1831877139}
   x: 13
   z: 1
@@ -34690,7 +34702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 3
-  occupant: {fileID: 435228454}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1926703021}
   x: 10
   z: 3
@@ -36592,7 +36604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 84698393}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 397916711}
   x: 8
   z: 1
@@ -36820,7 +36832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 1
-  occupant: {fileID: 84698393}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1305995950}
   x: 8
   z: 0
@@ -38266,7 +38278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 2
-  occupant: {fileID: 1947661099}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1327574248}
   x: 2
   z: 1
@@ -41755,7 +41767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 2
-  occupant: {fileID: 1721436752}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1394560008}
   x: 10
   z: 1
@@ -46986,6 +46998,10 @@ PrefabInstance:
       propertyPath: originalTile
       value: 
       objectReference: {fileID: 623282209}
+    - target: {fileID: 4863608234071097668, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+      propertyPath: isAIControlled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
 --- !u!1 &1978280202
@@ -47702,7 +47718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileHeight: 2
-  occupant: {fileID: 1947661099}
+  occupant: {fileID: 0}
   tileHighlight: {fileID: 1434983279}
   x: 2
   z: 2
