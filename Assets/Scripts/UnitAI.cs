@@ -51,7 +51,7 @@ public class UnitAI : MonoBehaviour
 
         if (idealTarget != null)
         {
-            Debug.Log(unit.unitName + " AI is targetting " + idealTarget?.unitName);
+            //Debug.Log(unit.unitName + " AI is targetting " + idealTarget?.unitName);
             //No movement is needed so don't move
             //Just attack that target
             yield return new WaitForSeconds(1);
@@ -76,7 +76,7 @@ public class UnitAI : MonoBehaviour
                 return ret;
             });
             idealTarget = potentialTargets[0];
-            Debug.Log(unit.unitName + " AI is targetting " + idealTarget?.unitName);
+            //Debug.Log(unit.unitName + " AI is targetting " + idealTarget?.unitName);
 
             //Determine which tile to move to
             List<MapTile> moveableTiles = unit.GetMoveableTiles();

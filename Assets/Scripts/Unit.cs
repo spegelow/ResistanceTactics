@@ -113,25 +113,25 @@ public class Unit : MonoBehaviour
         return tile.occupant != null && tile.occupant.team != team;
     }
 
-    private void OnValidate()
-    {
-        //If not in play mode move the unit
-        if(currentTile != _previousTile && !Application.isPlaying)
-        {
-            _previousTile = currentTile;
+    //private void OnValidate()
+    //{
+    //    //If not in play mode move the unit
+    //    if(currentTile != _previousTile && !Application.isPlaying)
+    //    {
+    //        _previousTile = currentTile;
 
-            //Remove this unit from the previous tile
-            if (currentTile != null)
-            {
-                currentTile.occupant = null;
-            }
+    //        //Remove this unit from the previous tile
+    //        if (currentTile != null)
+    //        {
+    //            currentTile.occupant = null;
+    //        }
 
-            //Place the unit at the new tile
-            originalTile = currentTile;
-            currentTile.occupant = this;
-            this.transform.position = currentTile.GetSurfacePosition();
-        }
-    }
+    //        //Place the unit at the new tile
+    //        originalTile = currentTile;
+    //        currentTile.occupant = this;
+    //        this.transform.position = currentTile.GetSurfacePosition();
+    //    }
+    //}
 
     public void ApplyDamage(int amount)
     {

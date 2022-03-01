@@ -37,6 +37,15 @@ public class BattleManager : MonoBehaviour
         turnQueue = new List<Unit>();
         units.ForEach(unit => turnQueue.Add(unit));
         OnTurnQueueUpdated.Invoke(turnQueue);
+
+        //Initialize the position of all units
+        units.ForEach(u =>
+        {
+            u.currentTile.occupant = u;
+            u.transform.position = u.currentTile.GetSurfacePosition();
+        });
+
+
         //Start the first turn
         StartTurn();
     }

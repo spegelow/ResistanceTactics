@@ -80,7 +80,12 @@ public class Pathfinder
         }
 
         List<MapTile> moveableTiles = new List<MapTile>();
-        nodes.ForEach(n => moveableTiles.Add(n.tile));
+        nodes.ForEach(n => {
+            if (n.tile.occupant == null || n.tile.occupant == unit)
+            { 
+                moveableTiles.Add(n.tile); 
+            }
+        });
         return moveableTiles;
     }
 
