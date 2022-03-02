@@ -16,16 +16,11 @@ public class Unit : MonoBehaviour
     public int movementRange;
 
     public int maxVerticalMovement = 1;
-    
-    public int minAttackRange;
-    public int maxAttackRange;
 
-    public int minDamage;
-    public int maxDamage;
+    public Weapon weapon;
+    public Armor armor;
 
-    public float accuracy;
-
-    public int maxHealth;
+    public int baseHealth;
     public int currentHealth;
 
     [Header("AI Settings")]
@@ -95,7 +90,7 @@ public class Unit : MonoBehaviour
 
     public List<MapTile> GetAttackableTiles()
     {
-        List<MapTile> targetableTiles = MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, minAttackRange, maxAttackRange);
+        List<MapTile> targetableTiles = MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, weapon.minAttackRange, weapon.maxAttackRange);
 
         //Only return the tiles in line of sight
         return targetableTiles.FindAll(tile => CanSeeTile(tile));
@@ -174,6 +169,11 @@ public class Unit : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+    }
+
+    public int GetMaxHealth()
+    {
+        return baseHealth + armor.health;
     }
 
     #region Helper Methods

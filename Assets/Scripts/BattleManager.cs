@@ -194,8 +194,8 @@ public class BattleManager : MonoBehaviour
         MapManager.instance.ClearTileHighlights();
         yield return new WaitForEndOfFrame();
         //Do an accuracy check
-        float aimCheck = Random.value;
-        if(aimCheck > attacker.accuracy)
+        float aimCheck = Random.value * 100;
+        if(aimCheck > attacker.weapon.accuracy)
         {
             CreateFloatingText(targetTile.occupant, "MISS!");
             yield return new WaitForSeconds(1);
@@ -204,7 +204,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             //The attack hit, so let's determine damage
-            int baseDamage = Random.Range(attacker.minDamage, attacker.maxDamage + 1);
+            int baseDamage = Random.Range(attacker.weapon.minDamage, attacker.weapon.maxDamage + 1);
 
             //Apply the damage to the target (if there is one?)
             CreateDamageText(targetTile.occupant, baseDamage);
