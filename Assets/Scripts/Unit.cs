@@ -24,6 +24,8 @@ public class Unit : MonoBehaviour
     public int baseHealth;
     public int currentHealth;
 
+    public List<Transform> targetingPoints;
+
     [Header("AI Settings")]
     public bool isAIControlled;
     public UnitAI unitAI;
@@ -107,7 +109,22 @@ public class Unit : MonoBehaviour
     public bool CanSeeTile(MapTile tile)
     {
         Vector3 attackOffset = new Vector3(0, 1.5f, 0);//Used to check line of sight from roughly the units face
-        return !Physics.Linecast(this.currentTile.GetSurfacePosition() + attackOffset, tile.GetSurfacePosition() + attackOffset);
+
+        foreach(Transform point in this.targetingPoints)
+        {
+            foreach(Transform secondPoint in this.targetingPoints)
+            {
+                Vector3 offset = secondPoint.localPosition;
+                if (!Physics.Linecast(point.position, tile.GetSurfacePosition() + offset))
+                {
+                    //Line of sight was drawn between corners
+                    return true;
+                }
+            }
+        }
+
+        return false;
+        //return !Physics.Linecast(this.currentTile.GetSurfacePosition() + attackOffset, tile.GetSurfacePosition() + attackOffset);
     }
 
     public bool IsValidTarget(MapTile tile)
