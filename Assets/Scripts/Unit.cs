@@ -132,7 +132,7 @@ public class Unit : MonoBehaviour
     {
         int cover = 0;
         int xDifference = position.x - currentTile.x;
-        int zDifference = position.x - currentTile.x;
+        int zDifference = position.z - currentTile.z;
 
         if(zDifference<-1)
         {
