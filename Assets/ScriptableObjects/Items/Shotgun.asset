@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8308b50a83304604eabfeb10ebdda525, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  itemName: 
-  minAttackRange: 0
-  maxAttackRange: 0
-  minDamage: 0
-  maxDamage: 0
-  baseAccuracy: 0
-  idealRange: 0
-  accuracyDropoffRate: 0
+  itemName: Shotgun
+  minAttackRange: 1
+  maxAttackRange: 8
+  minDamage: 5
+  maxDamage: 7
+  baseAccuracy: 90
+  idealRange: 4
+  accuracyDropoffRate: 20

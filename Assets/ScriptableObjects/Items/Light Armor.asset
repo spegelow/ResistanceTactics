@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da377479b78d9ff4e98ba51d5fb6cd12, type: 3}
   m_Name: Light Armor
   m_EditorClassIdentifier: 
-  itemName: 
-  health: 0
+  itemName: Light Armor
+  health: 4
   armor: 0
-  movement: 0
-  dodge: 0
+  movement: 1
+  dodge: 20

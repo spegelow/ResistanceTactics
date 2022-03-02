@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8308b50a83304604eabfeb10ebdda525, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  itemName: 
-  minAttackRange: 0
-  maxAttackRange: 0
-  minDamage: 0
-  maxDamage: 0
-  baseAccuracy: 0
-  idealRange: 0
+  itemName: Sword
+  minAttackRange: 1
+  maxAttackRange: 1
+  minDamage: 5
+  maxDamage: 7
+  baseAccuracy: 100
+  idealRange: 1
   accuracyDropoffRate: 0

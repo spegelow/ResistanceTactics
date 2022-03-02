@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da377479b78d9ff4e98ba51d5fb6cd12, type: 3}
   m_Name: Medium Armor
   m_EditorClassIdentifier: 
-  itemName: 
-  health: 0
-  armor: 0
+  itemName: Medium Armor
+  health: 5
+  armor: 1
   movement: 0
-  dodge: 0
+  dodge: 10

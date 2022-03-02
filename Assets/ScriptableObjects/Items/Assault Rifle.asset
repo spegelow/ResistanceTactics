@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8308b50a83304604eabfeb10ebdda525, type: 3}
   m_Name: Assault Rifle
   m_EditorClassIdentifier: 
-  itemName: 
-  minAttackRange: 0
-  maxAttackRange: 0
-  minDamage: 0
-  maxDamage: 0
-  baseAccuracy: 0
-  idealRange: 0
-  accuracyDropoffRate: 0
+  itemName: Assault Rifle
+  minAttackRange: 1
+  maxAttackRange: 10
+  minDamage: 4
+  maxDamage: 6
+  baseAccuracy: 80
+  idealRange: 6
+  accuracyDropoffRate: 15
