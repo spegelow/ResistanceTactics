@@ -78,7 +78,12 @@ public class MapManager : MonoBehaviour
 
         //Save the heights of all the tiles
         mapData.tileHeights = new List<int>();
-        mapTiles.ForEach(tile => mapData.tileHeights.Add(tile.tileHeight));
+        mapData.wallHeights = new List<int[]>();
+        mapTiles.ForEach(tile =>
+        {
+            mapData.tileHeights.Add(tile.tileHeight);
+            mapData.wallHeights.Add(tile.wallHeights);
+        });
 
         //Actually save the asset file
         EditorUtility.SetDirty(mapData);
@@ -106,6 +111,7 @@ public class MapManager : MonoBehaviour
         for(int i = 0; i<mapData.tileHeights.Count; i++)
         {
             mapTiles[i].tileHeight = mapData.tileHeights[i];
+            mapTiles[i].wallHeights = (int[]) mapData.wallHeights[i].Clone();
             mapTiles[i].UpdateHeight();
         }
     }

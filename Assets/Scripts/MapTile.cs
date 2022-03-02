@@ -15,6 +15,14 @@ public class MapTile : MonoBehaviour
     public int x;
     public int z;
 
+    public int[] wallHeights;
+    [HideInInspector]
+    public GameObject[] walls;
+    public GameObject wallParent;
+    [Tooltip("Toggle this setting to visually update the walls in the inspector")]
+    public bool updateWalls;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +47,20 @@ public class MapTile : MonoBehaviour
         this.transform.localScale = new Vector3(1, tileHeight, 1);
         this.transform.localPosition = new Vector3(this.transform.localPosition.x, (tileHeight / 2f)-.5f, this.transform.localPosition.z);
 
+
+        //Move and rescale the walls correctly
+        wallParent.transform.position = GetSurfacePosition();
+        wallParent.transform.parent = null;
+        wallParent.transform.localScale = Vector3.one;
+        wallParent.transform.parent = this.transform;
+
+        //Rescale individual walls
+        for(int i=0; i<4; i++)
+        {
+            walls[i].SetActive(wallHeights[i] != 0);
+            walls[i].transform.localScale = new Vector3(1, wallHeights[i], 1);
+        }
+
         //Move the highlight to the correct position
         //tileHighlight.transform.position = GetSurfacePosition() + Vector3.up * highlightOffset;
     }
@@ -49,6 +71,12 @@ public class MapTile : MonoBehaviour
         if(tileHeight != _previousHeight)
         {
             _previousHeight = tileHeight;
+            UpdateHeight();
+        }
+
+        if(updateWalls)
+        {
+            updateWalls = false;
             UpdateHeight();
         }
     }
@@ -106,5 +134,28 @@ public class MapTile : MonoBehaviour
         int zDist = Mathf.Abs(otherTile.z - this.z);
 
         return Mathf.Sqrt(xDist * xDist + zDist * zDist);
+    }
+
+    public static int GetWallIndex(int x, int z)
+    {
+        if(x == 0 && z == 1)
+        {
+            return 0;
+        }
+        if (x == 1 && z == 0)
+        {
+            return 1;
+        }
+        if (x == 0 && z == -1)
+        {
+            return 2;
+        }
+        if (x == -1 && z == 0)
+        {
+            return 3;
+        }
+
+        //Something is wrong now, so throw an error
+        throw new System.Exception("Incorrect inputs, cannot calculate wall index");
     }
 }

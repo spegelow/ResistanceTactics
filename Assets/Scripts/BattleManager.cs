@@ -76,8 +76,7 @@ public class BattleManager : MonoBehaviour
         //Initialize the position of all units
         units.ForEach(u =>
         {
-            u.currentTile.occupant = u;
-            u.transform.position = u.currentTile.GetSurfacePosition();
+            u.InitializeUnit();
         });
 
 

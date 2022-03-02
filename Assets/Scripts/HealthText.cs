@@ -18,11 +18,11 @@ public class HealthText : MonoBehaviour
 
         if (unit.GetCoverValue() == 1)
         {
-            healthUI.text += "\nHalf Cover";
+            healthUI.text += "\nHC";
         }
         else if (unit.GetCoverValue() == 2)
         {
-            healthUI.text += "\nFull Cover";
+            healthUI.text += "\nFC";
         }
     }
 }

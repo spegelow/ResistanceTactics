@@ -8,4 +8,5 @@ public class MapData : ScriptableObject
     public int width;
     public int height;
     public List<int> tileHeights;
+    public List<int[]> wallHeights;
 }

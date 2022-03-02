@@ -5,9 +5,10 @@ using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
+    public Vector2 mapPosition;
+
     public MapTile currentTile;
     public MapTile originalTile;//The tile this unit began movement on, used for undoing movement
-    MapTile _previousTile;
 
     public string unitName;
 
@@ -32,17 +33,17 @@ public class Unit : MonoBehaviour
     public UnityEvent OnHealthChanged;
     public UnityEvent OnUnitMoved;
 
-    // Start is called before the first frame update
-    void Start()
+    public void InitializeUnit()
     {
+        if (currentTile == null)
+        {
+            MoveToTile(MapManager.instance.GetTile((int)mapPosition.x, (int)mapPosition.y));
+        }
+        currentTile.occupant = this;
+        transform.position = currentTile.GetSurfacePosition();
+
         currentHealth = GetMaxHealth();
         OnHealthChanged.Invoke();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void MoveToTile(MapTile newTile)
@@ -159,27 +160,31 @@ public class Unit : MonoBehaviour
     {
         MapTile m = MapManager.instance.GetTile(currentTile.x + x, currentTile.z + z);
 
+        int wallIndex = MapTile.GetWallIndex(x, z);
+        int otherWallIndex = MapTile.GetWallIndex(-x, -z);
+
+        int coverHeight = 0;
+
+        //Walls on the current tile should always give cover
+        coverHeight = currentTile.wallHeights[wallIndex];
+
+        
         if(m==null)
         {
-            //No tile at position, no cover
-            return 0;
+            //No other tile, just use this tiles cover
+            return coverHeight;
         }
 
-        if(m.tileHeight <= currentTile.tileHeight)
+        //Get the effective height of the other tile, wall + tile itself
+        int otherHeight = m.tileHeight + m.wallHeights[otherWallIndex];
+
+        coverHeight = Mathf.Max(coverHeight, otherHeight - currentTile.tileHeight);
+        if(coverHeight > 2)
         {
-            //Same height or lower, no cover
-            return 0;
+            coverHeight = 2;
         }
-        else if(m.tileHeight == currentTile.tileHeight + 1)
-        {
-            //One tile higher, half cover
-            return 1;
-        }
-        else
-        {
-            //Two or more higher, full cover
-            return 2;
-        }
+
+        return coverHeight;
     }
 
     public float CalculateAccuracy(MapTile tile)
@@ -204,25 +209,27 @@ public class Unit : MonoBehaviour
         return accuracy;
     }
 
-    //private void OnValidate()
-    //{
-    //    //If not in play mode move the unit
-    //    if(currentTile != _previousTile && !Application.isPlaying)
-    //    {
-    //        _previousTile = currentTile;
+    private void OnValidate()
+    {
+        ////If not in play mode move the unit
+        //if (currentTile != _previousTile && !Application.isPlaying)
+        //{
+        //    _previousTile = currentTile;
 
-    //        //Remove this unit from the previous tile
-    //        if (currentTile != null)
-    //        {
-    //            currentTile.occupant = null;
-    //        }
+        //    //Remove this unit from the previous tile
+        //    if (currentTile != null)
+        //    {
+        //        currentTile.occupant = null;
+        //    }
 
-    //        //Place the unit at the new tile
-    //        originalTile = currentTile;
-    //        currentTile.occupant = this;
-    //        this.transform.position = currentTile.GetSurfacePosition();
-    //    }
-    //}
+        //    //Place the unit at the new tile
+        //    originalTile = currentTile;
+        //    currentTile.occupant = this;
+        //    this.transform.position = currentTile.GetSurfacePosition();
+        //}
+
+        //mapPosition = new Vector2(currentTile.x, currentTile.z);
+    }
 
     public void ApplyDamage(int amount)
     {
