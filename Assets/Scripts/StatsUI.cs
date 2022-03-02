@@ -26,6 +26,6 @@ public class StatsUI : MonoBehaviour
 
     public void UpdateUI(Unit unit)
     {
-        statsUI.text = "" + unit.unitName + "\n Movement " + unit.GetMovement() + "\n Min Range " + unit.weapon.minAttackRange + "\n Max Range " + unit.weapon.maxAttackRange + "\n Min Damage " + unit.weapon.minDamage + "\n Max Damage " + unit.weapon.maxDamage + "\n Accuracy " + unit.weapon.baseAccuracy;
+        statsUI.text = "" + unit.unitName + " " + unit.currentHealth + "/" + unit.GetMaxHealth() + "\nMovement " + unit.GetMovement() + "\n" + BattleManager.GetCurrentUnit().armor.itemName + "\nArmor " + BattleManager.GetCurrentUnit().armor.armor + "\nDodge Chance " + BattleManager.GetCurrentUnit().armor.dodge + "\n" + BattleManager.GetCurrentUnit().weapon.itemName + "\nMin Range " + BattleManager.GetCurrentUnit().weapon.minAttackRange + "\nMax Range " + BattleManager.GetCurrentUnit().weapon.maxAttackRange + "\nMin Damage " + BattleManager.GetCurrentUnit().weapon.minDamage + "\nMax Damage " + BattleManager.GetCurrentUnit().weapon.minDamage + "\nBase Accuracy " + unit.weapon.baseAccuracy + "\nIdeal Range " + BattleManager.GetCurrentUnit().weapon.idealRange + "\nAccuracy Dropoff Rate " + BattleManager.GetCurrentUnit().weapon.accuracyDropoffRate;
     }
 }
