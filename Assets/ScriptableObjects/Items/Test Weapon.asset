@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   minAttackRange: 1
-  maxAttackRange: 7
+  maxAttackRange: 100
   minDamage: 2
   maxDamage: 4
-  accuracy: 75
+  baseAccuracy: 75
+  idealRange: 4
+  accuracyDropoffRate: 5

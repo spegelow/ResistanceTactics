@@ -13,5 +13,7 @@ public class Weapon : ScriptableObject
     public int minDamage;
     public int maxDamage;
 
-    public float accuracy;
+    public float baseAccuracy;
+    public int idealRange;
+    public float accuracyDropoffRate;
 }

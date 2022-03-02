@@ -99,4 +99,12 @@ public class MapTile : MonoBehaviour
     {
         return MapManager.instance.GetTilesInRange(x, z, 1, 1);
     }
+
+    public float GetDistance(MapTile otherTile)
+    {
+        int xDist = Mathf.Abs(otherTile.x - this.x);
+        int zDist = Mathf.Abs(otherTile.z - this.z);
+
+        return Mathf.Sqrt(xDist * xDist + zDist * zDist);
+    }
 }

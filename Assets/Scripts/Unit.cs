@@ -109,6 +109,20 @@ public class Unit : MonoBehaviour
         return tile.occupant != null && tile.occupant.team != team;
     }
 
+    public float CalculateAccuracy(MapTile tile)
+    {
+        float accuracy = weapon.baseAccuracy;
+
+        //Calculate effect of range on accuracy
+        float range = this.currentTile.GetDistance(tile);
+        if(range > weapon.idealRange)
+        {
+            accuracy -= weapon.accuracyDropoffRate * (range - weapon.idealRange);
+        }
+
+        return accuracy;
+    }
+
     //private void OnValidate()
     //{
     //    //If not in play mode move the unit
