@@ -214,12 +214,15 @@ public class BattleManager : MonoBehaviour
             //The attack hit, so let's determine damage
             int baseDamage = Random.Range(attacker.weapon.minDamage, attacker.weapon.maxDamage + 1);
 
-            //Apply the damage to the target (if there is one?)
-            CreateDamageText(targetTile.occupant, baseDamage);
-            yield return new WaitForSeconds(1);
-            targetTile.occupant?.ApplyDamage(baseDamage);
-        }
+            //Reduce damage by armor
+            int armorReduction = Mathf.Min(targetTile.occupant.armor.armor, baseDamage);
 
+
+            //Apply the damage to the target (if there is one?)
+            CreateDamageText(targetTile.occupant, baseDamage-armorReduction);
+            yield return new WaitForSeconds(1);
+            targetTile.occupant?.ApplyDamage(baseDamage - armorReduction);
+        }
 
         EndTurn();
     }
