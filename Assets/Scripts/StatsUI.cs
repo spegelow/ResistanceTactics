@@ -10,7 +10,18 @@ public class StatsUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        statsUI.gameObject.SetActive(false);
+    }
+
+    public void ShowStatsUI()
+    {
+        statsUI.gameObject.SetActive(true);
+    }
+
+
+    public void HideStatsUI()
+    {
+        statsUI.gameObject.SetActive(false);
     }
 
     public void UpdateUI(Unit unit)

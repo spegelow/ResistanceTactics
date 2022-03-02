@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public UnityEvent<Unit> OnUnitHoveredTargeting;
     public UnityEvent OnTargetingStart;
     public UnityEvent OnTargetingEnd;
+    public UnityEvent OnCursorMoveNoUnit;
 
 
     public GameObject actionPanel;
@@ -76,6 +77,10 @@ public class InputManager : MonoBehaviour
                 }
 
                 OnUnitHovered.Invoke(tile.occupant);
+            }
+            else
+            {
+                OnCursorMoveNoUnit.Invoke();
             }
         }
 
