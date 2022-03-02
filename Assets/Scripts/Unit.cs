@@ -30,6 +30,7 @@ public class Unit : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent OnHealthChanged;
+    public UnityEvent OnUnitMoved;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +70,8 @@ public class Unit : MonoBehaviour
         currentTile = newTile;
         newTile.occupant = this;
         this.transform.position = newTile.GetSurfacePosition();
+
+        OnUnitMoved.Invoke();
     }
 
     public void UndoMovement()
@@ -81,6 +84,8 @@ public class Unit : MonoBehaviour
         originalTile = null;
         currentTile.occupant = this;
         this.transform.position = currentTile.GetSurfacePosition();
+
+        OnUnitMoved.Invoke();
     }
 
     public List<MapTile> GetMoveableTiles()
@@ -109,6 +114,74 @@ public class Unit : MonoBehaviour
         return tile.occupant != null && tile.occupant.team != team;
     }
 
+    /// <summary>
+    /// Returns 0 for no cover, 1 for half-cover, 2 for full cover
+    /// </summary>
+    /// <returns></returns>
+    public int GetCoverValue()
+    {
+        int cover = 0;
+        cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0, 1));
+        cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0, -1));
+        cover = Mathf.Max(cover, CheckCoverAtRelativePosition(1, 0));
+        cover = Mathf.Max(cover, CheckCoverAtRelativePosition(-1, 0));
+        return cover;
+    }
+
+    public int GetCoverFromPosition(MapTile position)
+    {
+        int cover = 0;
+        int xDifference = position.x - currentTile.x;
+        int zDifference = position.x - currentTile.x;
+
+        if(zDifference<-1)
+        {
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0,-1));
+        }
+        else if(zDifference>1)
+        {
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0, 1));
+        }
+
+        if (xDifference < -1)
+        {
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(-1, 0));
+        }
+        else if (xDifference > 1)
+        {
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(1, 0));
+        }
+
+        return cover;
+    }
+
+    public int CheckCoverAtRelativePosition(int x, int z)
+    {
+        MapTile m = MapManager.instance.GetTile(currentTile.x + x, currentTile.z + z);
+
+        if(m==null)
+        {
+            //No tile at position, no cover
+            return 0;
+        }
+
+        if(m.tileHeight <= currentTile.tileHeight)
+        {
+            //Same height or lower, no cover
+            return 0;
+        }
+        else if(m.tileHeight == currentTile.tileHeight + 1)
+        {
+            //One tile higher, half cover
+            return 1;
+        }
+        else
+        {
+            //Two or more higher, full cover
+            return 2;
+        }
+    }
+
     public float CalculateAccuracy(MapTile tile)
     {
         float accuracy = weapon.baseAccuracy;
@@ -120,6 +193,14 @@ public class Unit : MonoBehaviour
             accuracy -= weapon.accuracyDropoffRate * (range - weapon.idealRange);
         }
 
+        //Calculate effect of cover on attack
+        int coverFactor = tile.occupant.GetCoverFromPosition(this.currentTile);
+        int coverMult = 25;//25% per cover height
+        if(coverFactor != 0)
+        {
+            //Apply cover to accuracy
+            accuracy -= coverFactor * coverMult;
+        }
         return accuracy;
     }
 
