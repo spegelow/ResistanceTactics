@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
 
     public int team;
 
-    public int movementRange;
+    public int baseMovementRange;
 
     public int maxVerticalMovement = 1;
 
@@ -34,6 +34,7 @@ public class Unit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = GetMaxHealth();
         OnHealthChanged.Invoke();
     }
 
@@ -174,6 +175,11 @@ public class Unit : MonoBehaviour
     public int GetMaxHealth()
     {
         return baseHealth + armor.health;
+    }
+
+    public int GetMovement()
+    {
+        return baseMovementRange + armor.movement;
     }
 
     #region Helper Methods

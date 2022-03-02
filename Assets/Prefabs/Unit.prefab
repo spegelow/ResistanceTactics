@@ -131,7 +131,7 @@ MonoBehaviour:
   originalTile: {fileID: 0}
   unitName: 
   team: 0
-  movementRange: 3
+  baseMovementRange: 3
   maxVerticalMovement: 1
   weapon: {fileID: 11400000, guid: df7bc949a7dca074ca2f49d24aca5f01, type: 2}
   armor: {fileID: 11400000, guid: 96f7cf51c9eecd04f8b2bee4f6577161, type: 2}

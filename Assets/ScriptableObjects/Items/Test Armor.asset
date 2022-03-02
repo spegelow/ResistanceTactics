@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test Armor
   m_EditorClassIdentifier: 
   itemName: 
-  health: 0
+  health: 1
   armor: 0
-  movement: 0
+  movement: 1
   dodge: 0

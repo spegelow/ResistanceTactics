@@ -48,7 +48,7 @@ public class Pathfinder
 
                 //Is this tile in range?
                 int totalMoveCost = currentNode.movementToReachNode + costToMove;
-                if (totalMoveCost > unit.movementRange)
+                if (totalMoveCost > unit.GetMovement())
                 {
                     //Tile is out of range, so skip it
                     continue;

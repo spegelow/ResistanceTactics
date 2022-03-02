@@ -195,9 +195,17 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         //Do an accuracy check
         float aimCheck = Random.value * 100;
-        if(aimCheck > attacker.weapon.accuracy)
+
+        //Check for dodge
+        if (aimCheck > attacker.weapon.accuracy)
         {
             CreateFloatingText(targetTile.occupant, "MISS!");
+            yield return new WaitForSeconds(1);
+
+        }
+        if (aimCheck > attacker.weapon.accuracy - targetTile.occupant.armor.dodge)
+        {
+            CreateFloatingText(targetTile.occupant, "DODGE!");
             yield return new WaitForSeconds(1);
 
         }
