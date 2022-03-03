@@ -90,7 +90,7 @@ public class BattleManager : MonoBehaviour
         Unit currentUnit = turnQueue[0];
         if (currentUnit.isAIControlled)
         {
-            StartCoroutine(currentUnit.unitAI.BeginTurn());
+            StartCoroutine(currentUnit.unitAI.ResolveTurn());
         }
         else //Player Controlled
         {

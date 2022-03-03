@@ -56,7 +56,7 @@ public class Unit : MonoBehaviour
         //    return;
         //}
 
-        if(newTile.IsOccupied() && newTile.occupant != this)
+        if (newTile.IsOccupied() && newTile.occupant != this)
         {
             Debug.LogError("Cannot move to an occupied tile");
             return;
@@ -127,6 +127,28 @@ public class Unit : MonoBehaviour
         //return !Physics.Linecast(this.currentTile.GetSurfacePosition() + attackOffset, tile.GetSurfacePosition() + attackOffset);
     }
 
+    public bool CheckLineOfSight(MapTile tile1, MapTile tile2)
+    {
+        Vector3 attackOffset = new Vector3(0, 1.5f, 0);//Used to check line of sight from roughly the units face
+
+        foreach (Transform point in this.targetingPoints)
+        {
+            Vector3 offset1 = point.localPosition;
+            foreach (Transform secondPoint in this.targetingPoints)
+            {
+                Vector3 offset2 = secondPoint.localPosition;
+                if (!Physics.Linecast(tile1.GetSurfacePosition() + offset1, tile2.GetSurfacePosition() + offset2))
+                {
+                    //Line of sight was drawn between corners
+                    return true;
+                }
+            }
+        }
+
+        return false;
+        //return !Physics.Linecast(this.currentTile.GetSurfacePosition() + attackOffset, tile.GetSurfacePosition() + attackOffset);
+    }
+
     public bool IsValidTarget(MapTile tile)
     {
         return tile.occupant != null && tile.occupant.team != team;
@@ -148,26 +170,31 @@ public class Unit : MonoBehaviour
 
     public int GetCoverFromPosition(MapTile position)
     {
-        int cover = 0;
-        int xDifference = position.x - currentTile.x;
-        int zDifference = position.z - currentTile.z;
+        return GetCoverFromPosition(position, currentTile);
+    }
 
-        if(zDifference<-1)
+    public int GetCoverFromPosition(MapTile shootingPosition, MapTile coverPosition)
+    {
+        int cover = 0;
+        int xDifference = shootingPosition.x - coverPosition.x;
+        int zDifference = shootingPosition.z - coverPosition.z;
+
+        if (zDifference < -1)
         {
-            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0,-1));
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0, -1, coverPosition));
         }
-        else if(zDifference>1)
+        else if (zDifference > 1)
         {
-            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0, 1));
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(0, 1, coverPosition));
         }
 
         if (xDifference < -1)
         {
-            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(-1, 0));
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(-1, 0, coverPosition));
         }
         else if (xDifference > 1)
         {
-            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(1, 0));
+            cover = Mathf.Max(cover, CheckCoverAtRelativePosition(1, 0, coverPosition));
         }
 
         return cover;
@@ -175,7 +202,12 @@ public class Unit : MonoBehaviour
 
     public int CheckCoverAtRelativePosition(int x, int z)
     {
-        MapTile m = MapManager.instance.GetTile(currentTile.x + x, currentTile.z + z);
+        return CheckCoverAtRelativePosition(x, z, currentTile);
+    }
+
+    public int CheckCoverAtRelativePosition(int x, int z, MapTile relativeTile)
+    {
+        MapTile m = MapManager.instance.GetTile(relativeTile.x + x, relativeTile.z + z);
 
         int wallIndex = MapTile.GetWallIndex(x, z);
         int otherWallIndex = MapTile.GetWallIndex(-x, -z);
@@ -183,10 +215,10 @@ public class Unit : MonoBehaviour
         int coverHeight = 0;
 
         //Walls on the current tile should always give cover
-        coverHeight = currentTile.wallHeights[wallIndex];
+        coverHeight = relativeTile.wallHeights[wallIndex];
 
-        
-        if(m==null)
+
+        if (m == null)
         {
             //No other tile, just use this tiles cover
             return coverHeight;
@@ -195,8 +227,8 @@ public class Unit : MonoBehaviour
         //Get the effective height of the other tile, wall + tile itself
         int otherHeight = m.tileHeight + m.wallHeights[otherWallIndex];
 
-        coverHeight = Mathf.Max(coverHeight, otherHeight - currentTile.tileHeight);
-        if(coverHeight > 2)
+        coverHeight = Mathf.Max(coverHeight, otherHeight - relativeTile.tileHeight);
+        if (coverHeight > 2)
         {
             coverHeight = 2;
         }
@@ -204,21 +236,26 @@ public class Unit : MonoBehaviour
         return coverHeight;
     }
 
-    public float CalculateAccuracy(MapTile tile)
+    public float CalculateAccuracy(MapTile targetTile)
+    {
+        return CalculateAccuracy(this.currentTile, targetTile);
+    }
+
+    public float CalculateAccuracy(MapTile attackerTile, MapTile targetTile)
     {
         float accuracy = weapon.baseAccuracy;
 
         //Calculate effect of range on accuracy
-        float range = this.currentTile.GetDistance(tile);
-        if(range > weapon.idealRange)
+        float range = attackerTile.GetDistance(targetTile);
+        if (range > weapon.idealRange)
         {
             accuracy -= weapon.accuracyDropoffRate * (range - weapon.idealRange);
         }
 
         //Calculate effect of cover on attack
-        int coverFactor = tile.occupant.GetCoverFromPosition(this.currentTile);
+        int coverFactor = targetTile.occupant.GetCoverFromPosition(attackerTile);
         int coverMult = 25;//25% per cover height
-        if(coverFactor != 0)
+        if (coverFactor != 0)
         {
             //Apply cover to accuracy
             accuracy -= coverFactor * coverMult;
