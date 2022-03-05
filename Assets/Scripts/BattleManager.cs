@@ -76,8 +76,7 @@ public class BattleManager : MonoBehaviour
         //Initialize the position of all units
         units.ForEach(u =>
         {
-            u.currentTile.occupant = u;
-            u.transform.position = u.currentTile.GetSurfacePosition();
+            u.InitializeUnit();
         });
 
 
@@ -91,7 +90,7 @@ public class BattleManager : MonoBehaviour
         Unit currentUnit = turnQueue[0];
         if (currentUnit.isAIControlled)
         {
-            StartCoroutine(currentUnit.unitAI.BeginTurn());
+            StartCoroutine(currentUnit.unitAI.ResolveTurn());
         }
         else //Player Controlled
         {
@@ -194,24 +193,35 @@ public class BattleManager : MonoBehaviour
         MapManager.instance.ClearTileHighlights();
         yield return new WaitForEndOfFrame();
         //Do an accuracy check
-        float aimCheck = Random.value;
-        if(aimCheck > attacker.accuracy)
+        float aimCheck = Random.value * 100;
+        float accuracy = attacker.CalculateAccuracy(targetTile);
+        Debug.Log("Shot accuracy: " + accuracy + "% \nAccuracy Check value: " + aimCheck);
+        
+        //Check for dodge
+        if (aimCheck > accuracy)
         {
             CreateFloatingText(targetTile.occupant, "MISS!");
             yield return new WaitForSeconds(1);
-
+        }
+        else if (aimCheck > accuracy - targetTile.occupant.armor.dodge)
+        {
+            CreateFloatingText(targetTile.occupant, "DODGE!");
+            yield return new WaitForSeconds(1);
         }
         else
         {
             //The attack hit, so let's determine damage
-            int baseDamage = Random.Range(attacker.minDamage, attacker.maxDamage + 1);
+            int baseDamage = Random.Range(attacker.weapon.minDamage, attacker.weapon.maxDamage + 1);
+
+            //Reduce damage by armor
+            int armorReduction = Mathf.Min(targetTile.occupant.armor.armor, baseDamage);
+
 
             //Apply the damage to the target (if there is one?)
-            CreateDamageText(targetTile.occupant, baseDamage);
+            CreateDamageText(targetTile.occupant, baseDamage-armorReduction);
             yield return new WaitForSeconds(1);
-            targetTile.occupant?.ApplyDamage(baseDamage);
+            targetTile.occupant?.ApplyDamage(baseDamage - armorReduction);
         }
-
 
         EndTurn();
     }

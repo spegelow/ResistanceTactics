@@ -23,7 +23,9 @@ public class AttackPreviewUI : MonoBehaviour
 
     public void UpdateAttackUI(Unit unit)
     {
-        attackUI.text = "" + unit.unitName + " " + unit.currentHealth + "/" + unit.maxHealth + "\n" + (BattleManager.GetCurrentUnit().accuracy * 100) + "\n" + BattleManager.GetCurrentUnit().minDamage + "-" + BattleManager.GetCurrentUnit().maxDamage;
+        attackUI.text = "" + unit.unitName + " " + unit.currentHealth + "/" + unit.GetMaxHealth() + "\n" + 
+        Mathf.Round(BattleManager.GetCurrentUnit().CalculateAccuracy(unit.currentTile)) + "\n" + BattleManager.GetCurrentUnit().weapon.minDamage + "-" + 
+        BattleManager.GetCurrentUnit().weapon.maxDamage;
     }
 
     public void HideAttackUI()

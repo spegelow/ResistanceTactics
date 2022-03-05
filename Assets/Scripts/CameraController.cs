@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         this.transform.position += moveDirection.normalized * Time.deltaTime * moveSpeed;
 
 
-        float zoomFactor = Input.mouseScrollDelta.y * zoomSpeed;
+        float zoomFactor = Input.mouseScrollDelta.y * -zoomSpeed;
         Camera.main.orthographicSize += zoomFactor;
     }
 }

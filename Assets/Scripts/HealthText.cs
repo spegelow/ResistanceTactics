@@ -14,6 +14,15 @@ public class HealthText : MonoBehaviour
 
     public void UpdateUI(Unit unit)
     {
-        healthUI.text = "" + unit.currentHealth + "/" + unit.maxHealth;
+        healthUI.text = "" + unit.currentHealth + "/" + unit.GetMaxHealth();
+
+        if (unit.GetCoverValue() == 1)
+        {
+            healthUI.text += "\nHC";
+        }
+        else if (unit.GetCoverValue() == 2)
+        {
+            healthUI.text += "\nFC";
+        }
     }
 }

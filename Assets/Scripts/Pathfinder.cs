@@ -48,7 +48,7 @@ public class Pathfinder
 
                 //Is this tile in range?
                 int totalMoveCost = currentNode.movementToReachNode + costToMove;
-                if (totalMoveCost > unit.movementRange)
+                if (totalMoveCost > unit.GetMovement())
                 {
                     //Tile is out of range, so skip it
                     continue;
@@ -91,7 +91,14 @@ public class Pathfinder
 
     public static int GetCostToMoveBetweenTiles(Unit u, MapTile t1, MapTile t2)
     {
-        if(t2.tileHeight - t1.tileHeight > u.maxVerticalMovement)
+        int xDiff = t2.x - t1.x; 
+        int zDiff = t2.z - t1.z;
+        int wallIndex = MapTile.GetWallIndex(xDiff, zDiff);
+        int otherWallIndex = MapTile.GetWallIndex(-xDiff, -zDiff);
+
+        int requiredVerticalMovement = Mathf.Max(t1.wallHeights[wallIndex], (t2.tileHeight + t2.wallHeights[otherWallIndex]) - t1.tileHeight);
+
+        if (requiredVerticalMovement > u.maxVerticalMovement)
         {
             //Too big a difference in heights, cannot move
             return -1;
