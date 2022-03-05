@@ -18,7 +18,7 @@ public class TurnQueueUI : MonoBehaviour
     public void OnTurnQueueUpdated(List<Unit>turnQueue)
     {
         string toDisplay = "";
-        turnQueue.ForEach(unit => toDisplay += unit.unitName + "\n");
+        turnQueue.ForEach(unit => toDisplay += unit.unitData.unitName + "\n");
         turns.text = toDisplay;
     }
 }

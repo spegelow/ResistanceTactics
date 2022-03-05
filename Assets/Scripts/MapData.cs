@@ -9,4 +9,14 @@ public class MapData : ScriptableObject
     public int height;
     public List<int> tileHeights;
     public List<int[]> wallHeights;
+    
+    [System.Serializable]
+    public struct UnitSpawn
+    {
+        public UnitData unit;
+        public Vector2 point;
+    }
+
+    public List<UnitSpawn> playerUnits;
+    public List<UnitSpawn> enemyUnits;
 }

@@ -98,7 +98,7 @@ public class Pathfinder
 
         int requiredVerticalMovement = Mathf.Max(t1.wallHeights[wallIndex], (t2.tileHeight + t2.wallHeights[otherWallIndex]) - t1.tileHeight);
 
-        if (requiredVerticalMovement > u.maxVerticalMovement)
+        if (requiredVerticalMovement > u.unitData.maxVerticalMovement)
         {
             //Too big a difference in heights, cannot move
             return -1;

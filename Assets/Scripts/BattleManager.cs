@@ -9,6 +9,9 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
+    public GameObject unitPrefab;
+    public Transform unitParent;
+
     public List<Unit> turnQueue;
     public bool randomizeTurnOrderOnStart;
     [Tooltip("Can only use with 2 teams of equal size")]
@@ -30,6 +33,28 @@ public class BattleManager : MonoBehaviour
 
     public void StartBattle()
     {
+        //Initialize the position of all units
+        GameObject newUnitObject;
+        Unit newUnit;
+        foreach (MapData.UnitSpawn spawn in MapManager.instance.mapData.playerUnits)
+        {
+            newUnitObject = GameObject.Instantiate(unitPrefab, unitParent);
+            newUnit = newUnitObject.GetComponent<Unit>();
+
+            newUnit.InitializeUnit(spawn.unit, 0, spawn.point);
+            units.Add(newUnit);
+        }
+
+        foreach (MapData.UnitSpawn spawn in MapManager.instance.mapData.enemyUnits)
+        {
+            newUnitObject = GameObject.Instantiate(unitPrefab, unitParent);
+            newUnit = newUnitObject.GetComponent<Unit>();
+
+            newUnit.InitializeUnit(spawn.unit, 1, spawn.point);
+            newUnit.isAIControlled = true;
+            units.Add(newUnit);
+        }
+
         //If necessary, randomize the unit list order
         if (randomizeTurnOrderOnStart)
         {
@@ -73,11 +98,7 @@ public class BattleManager : MonoBehaviour
         units.ForEach(unit => turnQueue.Add(unit));
         OnTurnQueueUpdated.Invoke(turnQueue);
 
-        //Initialize the position of all units
-        units.ForEach(u =>
-        {
-            u.InitializeUnit();
-        });
+        
 
 
         //Start the first turn
@@ -203,7 +224,7 @@ public class BattleManager : MonoBehaviour
             CreateFloatingText(targetTile.occupant, "MISS!");
             yield return new WaitForSeconds(1);
         }
-        else if (aimCheck > accuracy - targetTile.occupant.armor.dodge)
+        else if (aimCheck > accuracy - targetTile.occupant.unitData.armor.dodge)
         {
             CreateFloatingText(targetTile.occupant, "DODGE!");
             yield return new WaitForSeconds(1);
@@ -211,10 +232,10 @@ public class BattleManager : MonoBehaviour
         else
         {
             //The attack hit, so let's determine damage
-            int baseDamage = Random.Range(attacker.weapon.minDamage, attacker.weapon.maxDamage + 1);
+            int baseDamage = Random.Range(attacker.unitData.weapon.minDamage, attacker.unitData.weapon.maxDamage + 1);
 
             //Reduce damage by armor
-            int armorReduction = Mathf.Min(targetTile.occupant.armor.armor, baseDamage);
+            int armorReduction = Mathf.Min(targetTile.occupant.unitData.armor.armor, baseDamage);
 
 
             //Apply the damage to the target (if there is one?)

@@ -104,7 +104,7 @@ public class UnitAI : MonoBehaviour
             else
             {
                 //Just end this AI's turn
-                Debug.Log(unit.unitName + " is waiting.");
+                Debug.Log(unit.unitData.unitName + " is waiting.");
                 yield return new WaitForSeconds(1);
                 BattleManager.instance.EndTurn();
             }
@@ -162,7 +162,7 @@ public class UnitAI : MonoBehaviour
         else
         {
             //Just end this AI's turn
-            Debug.Log(unit.unitName + " is waiting.");
+            Debug.Log(unit.unitData.unitName + " is waiting.");
             yield return new WaitForSeconds(1);
             BattleManager.instance.EndTurn();
         }
@@ -207,7 +207,7 @@ public class UnitAI : MonoBehaviour
         float range = tile.GetDistance(enemy.currentTile);
 
         //We only really care about tiles we can see and shoot at
-        if (canSeeTile && range >= unit.weapon.minAttackRange && range <= unit.weapon.maxAttackRange)
+        if (canSeeTile && range >= unit.unitData.weapon.minAttackRange && range <= unit.unitData.weapon.maxAttackRange)
         {
             //We can shoot this tile, so that is worth something
             enemyScore = 500;
@@ -223,20 +223,20 @@ public class UnitAI : MonoBehaviour
             }
 
             //Prioritize potential kills
-            if (enemy.currentHealth <= unit.weapon.maxDamage)
+            if (enemy.currentHealth <= unit.unitData.weapon.maxDamage)
             {
                 enemyScore += 50;
             }
 
             //Prioritize guarenteed kills
-            if (enemy.currentHealth <= unit.weapon.minDamage)
+            if (enemy.currentHealth <= unit.unitData.weapon.minDamage)
             {
                 enemyScore += 100;
             }
 
             //Penalties:
             //Outside of weapon's ideal range
-            if (range > unit.weapon.idealRange)
+            if (range > unit.unitData.weapon.idealRange)
             {
                 enemyScore -= 50;
             }

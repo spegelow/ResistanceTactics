@@ -26,6 +26,6 @@ public class StatsUI : MonoBehaviour
 
     public void UpdateUI(Unit unit)
     {
-        statsUI.text = "" + unit.unitName + " " + unit.currentHealth + "/" + unit.GetMaxHealth() + "\nMovement " + unit.GetMovement() + "\n\n" + unit.armor.itemName + "\nArmor " + unit.armor.armor + "\nDodge Chance " + unit.armor.dodge + "\n\n" + unit.weapon.itemName + "\nMin Range " + unit.weapon.minAttackRange + "\nMax Range " + unit.weapon.maxAttackRange + "\nMin Damage " + unit.weapon.minDamage + "\nMax Damage " + unit.weapon.maxDamage + "\nBase Accuracy " + unit.weapon.baseAccuracy + "\nIdeal Range " + unit.weapon.idealRange + "\nAccuracy Dropoff Rate " + unit.weapon.accuracyDropoffRate;
+        statsUI.text = "" + unit.unitData.unitName + " " + unit.currentHealth + "/" + unit.GetMaxHealth() + "\nMovement " + unit.GetMovement() + "\n\n" + unit.unitData.armor.itemName + "\nArmor " + unit.unitData.armor.armor + "\nDodge Chance " + unit.unitData.armor.dodge + "\n\n" + unit.unitData.weapon.itemName + "\nMin Range " + unit.unitData.weapon.minAttackRange + "\nMax Range " + unit.unitData.weapon.maxAttackRange + "\nMin Damage " + unit.unitData.weapon.minDamage + "\nMax Damage " + unit.unitData.weapon.maxDamage + "\nBase Accuracy " + unit.unitData.weapon.baseAccuracy + "\nIdeal Range " + unit.unitData.weapon.idealRange + "\nAccuracy Dropoff Rate " + unit.unitData.weapon.accuracyDropoffRate;
     }
 }

@@ -128,17 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39ca082af77852409f66e633bc67cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitData: {fileID: 0}
   mapPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
   originalTile: {fileID: 0}
-  unitName: 
   team: 0
-  baseMovementRange: 5
-  maxVerticalMovement: 1
-  weapon: {fileID: 11400000, guid: df7bc949a7dca074ca2f49d24aca5f01, type: 2}
-  armor: {fileID: 11400000, guid: 96f7cf51c9eecd04f8b2bee4f6577161, type: 2}
-  baseHealth: 6
-  currentHealth: 6
+  currentHealth: 0
   targetingPoints:
   - {fileID: 7798155628296863012}
   - {fileID: 6638237167564437564}

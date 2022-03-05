@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af2383197050ae4e8c59b684f96208e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 833772774635031315, guid: e54d03ac0c814f14ca7393c8299aec47, type: 3}
+  unitParent: {fileID: 0}
   turnQueue: []
   randomizeTurnOrderOnStart: 1
   alternateTeamsOnStart: 1

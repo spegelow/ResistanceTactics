@@ -24,12 +24,12 @@ public class MapManagerEditor : Editor
             targetManager.GenerateMap(targetManager.mapWidth, targetManager.mapHeight);
         }
 
-        if (GUILayout.Button("Save Map"))
+        if (GUILayout.Button("Save Map Geometry"))
         {
             targetManager.SaveMap();
         }
 
-        if (GUILayout.Button("Load Map"))
+        if (GUILayout.Button("Load Map Geometry"))
         {
             targetManager.LoadMap();
         }

@@ -5,23 +5,15 @@ using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
+    public UnitData unitData;
+
     public Vector2 mapPosition;
 
     public MapTile currentTile;
     public MapTile originalTile;//The tile this unit began movement on, used for undoing movement
 
-    public string unitName;
-
     public int team;
 
-    public int baseMovementRange;
-
-    public int maxVerticalMovement = 1;
-
-    public Weapon weapon;
-    public Armor armor;
-
-    public int baseHealth;
     public int currentHealth;
 
     public List<Transform> targetingPoints;
@@ -35,8 +27,12 @@ public class Unit : MonoBehaviour
     public UnityEvent OnHealthChanged;
     public UnityEvent OnUnitMoved;
 
-    public void InitializeUnit()
+    public void InitializeUnit(UnitData unitData, int team, Vector2 tilePosition)
     {
+        this.unitData = unitData;
+        this.team = team;
+        mapPosition = tilePosition;
+
         if (currentTile == null)
         {
             MoveToTile(MapManager.instance.GetTile((int)mapPosition.x, (int)mapPosition.y));
@@ -99,7 +95,7 @@ public class Unit : MonoBehaviour
 
     public List<MapTile> GetAttackableTiles()
     {
-        List<MapTile> targetableTiles = MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, weapon.minAttackRange, weapon.maxAttackRange);
+        List<MapTile> targetableTiles = MapManager.instance.GetTilesInRange(currentTile.x, currentTile.z, unitData.weapon.minAttackRange, unitData.weapon.maxAttackRange);
 
         //Only return the tiles in line of sight
         return targetableTiles.FindAll(tile => CanSeeTile(tile));
@@ -243,13 +239,13 @@ public class Unit : MonoBehaviour
 
     public float CalculateAccuracy(MapTile attackerTile, MapTile targetTile)
     {
-        float accuracy = weapon.baseAccuracy;
+        float accuracy = unitData.weapon.baseAccuracy;
 
         //Calculate effect of range on accuracy
         float range = attackerTile.GetDistance(targetTile);
-        if (range > weapon.idealRange)
+        if (range > unitData.weapon.idealRange)
         {
-            accuracy -= weapon.accuracyDropoffRate * (range - weapon.idealRange);
+            accuracy -= unitData.weapon.accuracyDropoffRate * (range - unitData.weapon.idealRange);
         }
 
         //Calculate effect of cover on attack
@@ -330,12 +326,12 @@ public class Unit : MonoBehaviour
 
     public int GetMaxHealth()
     {
-        return baseHealth + armor.health;
+        return unitData.baseHealth + unitData.armor.health;
     }
 
     public int GetMovement()
     {
-        return baseMovementRange + armor.movement;
+        return unitData.baseMovementRange + unitData.armor.movement;
     }
 
     #region Helper Methods
