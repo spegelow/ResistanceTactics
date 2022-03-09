@@ -76,6 +76,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 0}
+  currentCursorTile: {fileID: 0}
+  OnUnitHovered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnitHoveredTargeting:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTargetingStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTargetingEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCursorMoveNoUnit:
+    m_PersistentCalls:
+      m_Calls: []
+  actionPanel: {fileID: 0}
+  actionButtonPrefab: {fileID: 1073977248648905972, guid: a810aa26347986f44a2e55de8f684209, type: 3}
+  actionButtons: []
+  currentBattleAction:
+    actionName: 
+    isWaitAction: 0
+    isWeaponAttack: 0
+    weapon: {fileID: 0}
+    targetingType: 0
+    requiresLineOfSight: 1
+    canTargetEmptyTiles: 0
+    canTargetSelf: 0
+    canTargetAllies: 0
+    canTargetEnemies: 1
+  inputState: 0
 --- !u!1 &8405495293391278511
 GameObject:
   m_ObjectHideFlags: 0

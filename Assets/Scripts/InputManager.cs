@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -20,10 +22,13 @@ public class InputManager : MonoBehaviour
 
 
     public GameObject actionPanel;
+    public GameObject actionButtonPrefab;
+    public List<GameObject> actionButtons;
+
 
     public delegate IEnumerator ActionDelegate(Unit unit, MapTile targetTile);
     public ActionDelegate currentAction;
-
+    public BattleAction currentBattleAction;
 
     public enum InputState { MovementSelection, ActionSelection, TargetSelection, IgnoreInput}
     public InputState inputState;
@@ -55,7 +60,7 @@ public class InputManager : MonoBehaviour
 
                 case InputState.TargetSelection:
                     //Undo the action selection and show the action list again
-                    SetupActionSelection();
+                    SetupActionSelection(currentUnit.GetUsableActions(currentUnit.currentTile));
                     OnTargetingEnd.Invoke();
                     break;
             }
@@ -151,14 +156,29 @@ public class InputManager : MonoBehaviour
         tiles.ForEach(tile => tile.SetHighlight(color));
     }
 
-    public void SetupActionSelection()
+    public void SetupActionSelection(List<BattleAction> actions)
     {
+        //Clear the old buttons
+        foreach(GameObject button in actionButtons)
+        {
+            Destroy(button);
+        }
+
+        GameObject g;
+        foreach(BattleAction a in actions)
+        {
+            g = Instantiate(actionButtonPrefab, actionPanel.transform);
+            g.GetComponent<Button>().onClick.AddListener(()=>ActionButtonClicked(a));
+            g.GetComponentInChildren<TMP_Text>().text = a.actionName;
+            actionButtons.Add(g);
+        }
+
         actionPanel.SetActive(true);
         MapManager.instance.ClearTileHighlights();
         inputState = InputState.ActionSelection;
     }
 
-    public void ActionButtonClicked(string actionName)
+    public void ActionButtonClicked(BattleAction clickedAction)
     {
         if(inputState != InputState.ActionSelection)
         {
@@ -167,18 +187,18 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if(actionName == "Wait")
+        if(clickedAction.isWaitAction)
         {
             //No target is needed for wait, so just call the battle manager
             inputState = InputState.IgnoreInput;
             BattleManager.instance.Wait(currentUnit, null);
 
         }
-        else if(actionName == "Attack")
+        else
         {
             SetCurrentUnit(BattleManager.instance.turnQueue[0]);
             SetSelectableTiles(BattleManager.instance.turnQueue[0].GetAttackableTiles(), Color.red);
-            currentAction = BattleManager.instance.ResolveAttack; //Set the current action to MoveUnit
+            currentAction = BattleManager.instance.ResolveAttack;
             inputState = InputState.TargetSelection;
             OnTargetingStart.Invoke();
         }

@@ -205,7 +205,7 @@ public class BattleManager : MonoBehaviour
 
         if (setupActions)
         {
-            InputManager.instance.SetupActionSelection();
+            InputManager.instance.SetupActionSelection(unit.GetUsableActions(unit.currentTile));
         }
     }
 
@@ -315,5 +315,27 @@ public class BattleManager : MonoBehaviour
     public void RestartBattle()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public static bool CheckLineOfSight(Unit source, MapTile tile1, MapTile tile2)
+    {
+        Vector3 attackOffset = new Vector3(0, 1.5f, 0);//Used to check line of sight from roughly the units face
+
+        foreach (Transform point in source.targetingPoints)
+        {
+            Vector3 offset1 = point.localPosition;
+            foreach (Transform secondPoint in source.targetingPoints)
+            {
+                Vector3 offset2 = secondPoint.localPosition;
+                if (!Physics.Linecast(tile1.GetSurfacePosition() + offset1, tile2.GetSurfacePosition() + offset2))
+                {
+                    //Line of sight was drawn between corners
+                    return true;
+                }
+            }
+        }
+
+        return false;
+        //return !Physics.Linecast(this.currentTile.GetSurfacePosition() + attackOffset, tile.GetSurfacePosition() + attackOffset);
     }
 }

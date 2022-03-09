@@ -334,6 +334,18 @@ public class Unit : MonoBehaviour
         return unitData.baseMovementRange + unitData.armor.movement;
     }
 
+    public List<BattleAction> GetUsableActions(MapTile tile)
+    {
+        List<BattleAction> actions = new List<BattleAction>();
+
+        actions.Add(BattleAction.WaitAction);
+        //Add the weapon action
+        actions.Add(new BattleAction(unitData.weapon));
+
+        return actions;
+    }
+
+
     #region Helper Methods
     //These methods are mainly used by AI to assist in decision making and data access
     public int MovementRequiredToGetInRange(Unit target)
