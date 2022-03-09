@@ -9,7 +9,11 @@ public class MapData : ScriptableObject
     public int height;
     public List<int> tileHeights;
     public List<int[]> wallHeights;
-    
+    public List<int> wallHeightsN;
+    public List<int> wallHeightsS;
+    public List<int> wallHeightsE;
+    public List<int> wallHeightsW;
+
     [System.Serializable]
     public struct UnitSpawn
     {

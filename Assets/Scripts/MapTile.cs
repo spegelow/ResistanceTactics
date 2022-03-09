@@ -50,7 +50,7 @@ public class MapTile : MonoBehaviour
 
         //Move and rescale the walls correctly
         wallParent.transform.position = GetSurfacePosition();
-        wallParent.transform.localScale = new Vector3(1, 1 / tileHeight, 1);
+        wallParent.transform.localScale = new Vector3(1, 1f / tileHeight, 1);
 
 
         //Rescale individual walls
