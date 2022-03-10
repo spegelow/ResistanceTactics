@@ -27,8 +27,7 @@ public class InputManager : MonoBehaviour
 
 
     public delegate IEnumerator ActionDelegate(Unit unit, MapTile targetTile);
-    public ActionDelegate currentAction;
-    public BattleAction currentBattleAction;
+    public BattleAction currentAction;
 
     public enum InputState { MovementSelection, ActionSelection, TargetSelection, IgnoreInput}
     public InputState inputState;
@@ -104,7 +103,7 @@ public class InputManager : MonoBehaviour
                     {
                         selectableTiles.Clear();
                         inputState = InputState.IgnoreInput;
-                        StartCoroutine(currentAction(currentUnit, tile));
+                        StartCoroutine(currentAction.ResolveAction(currentUnit, tile));
                     }
                 }
                 break;
@@ -123,7 +122,7 @@ public class InputManager : MonoBehaviour
                     {
                         OnTargetingEnd.Invoke();
                         selectableTiles.Clear();
-                        StartCoroutine(currentAction(currentUnit, tile));
+                        StartCoroutine(currentAction.ResolveAction(currentUnit, tile));
                     }
                 }
                 break;
@@ -196,9 +195,8 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            SetCurrentUnit(BattleManager.instance.turnQueue[0]);
-            SetSelectableTiles(BattleManager.instance.turnQueue[0].GetAttackableTiles(), Color.red);
-            currentAction = BattleManager.instance.ResolveAttack;
+            SetSelectableTiles(clickedAction.GetValidTargets(BattleManager.instance.turnQueue[0].currentTile, BattleManager.instance.turnQueue[0]), Color.red);
+            currentAction = clickedAction;
             inputState = InputState.TargetSelection;
             OnTargetingStart.Invoke();
         }

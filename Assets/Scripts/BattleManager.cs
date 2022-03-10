@@ -117,7 +117,7 @@ public class BattleManager : MonoBehaviour
         {
             InputManager.instance.SetCurrentUnit(currentUnit);
             InputManager.instance.SetSelectableTiles(currentUnit.GetMoveableTiles(), Color.green);
-            InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
+            InputManager.instance.currentAction = BattleAction.MoveAction; //Set the current action to MoveUnit
             InputManager.instance.inputState = InputManager.InputState.MovementSelection;
         }
     }
@@ -180,9 +180,8 @@ public class BattleManager : MonoBehaviour
         turnQueue[0].UndoMovement();
 
         //Resetup movement selection
-        InputManager.instance.SetCurrentUnit(turnQueue[0]);
         InputManager.instance.SetSelectableTiles(turnQueue[0].GetMoveableTiles(), Color.green);
-        InputManager.instance.currentAction = MoveUnit; //Set the current action to MoveUnit
+        InputManager.instance.currentAction = BattleAction.MoveAction; //Set the current action to MoveUnit
         InputManager.instance.inputState = InputManager.InputState.MovementSelection;
     }
 

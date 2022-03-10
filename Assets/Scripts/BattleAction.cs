@@ -8,6 +8,7 @@ public class BattleAction
     public string actionName;
 
     public bool isWaitAction;
+    public bool isMoveAction;
 
     public bool isWeaponAttack;
     public Weapon weapon;
@@ -29,6 +30,7 @@ public class BattleAction
     public BattleAction(Weapon weapon)
     {
         this.weapon = weapon;
+        isWeaponAttack = true;
         this.actionName = weapon.itemName;
     }
 
@@ -42,20 +44,40 @@ public class BattleAction
             return ba;
         }
     }
-
-    public List<MapTile> GetRange(MapTile userTile)
+    public static BattleAction MoveAction
     {
+        get
+        {
+            BattleAction ba = new BattleAction();
+            ba.isMoveAction = true;
+            ba.actionName = "Move";
+
+            ba.requiresLineOfSight = false;
+            ba.canTargetEmptyTiles = true;
+            ba.canTargetSelf = true;
+
+            return ba;
+        }
+    }
+
+    public List<MapTile> GetRange(MapTile userTile, Unit user)
+    {
+        if(isMoveAction)
+        {
+            return user.GetMoveableTiles();
+        }
+
         if(isWeaponAttack)
         {
             return MapManager.instance.GetTilesInRange(userTile.x, userTile.z, weapon.minAttackRange, weapon.maxAttackRange);
         }
 
-        return null;
+        return new List<MapTile>();
     }
 
     public List<MapTile> GetValidTargets(MapTile userTile, Unit user)
     {
-        List<MapTile> targets = GetRange(userTile);
+        List<MapTile> targets = GetRange(userTile, user);
 
         //Filter out the tiles so that only the valid ones remain
         bool test;
@@ -79,9 +101,14 @@ public class BattleAction
             yield return new WaitForSeconds(1);
             BattleManager.instance.EndTurn();
         }
+        else if(isMoveAction)
+        {
+            //TEMP Setup action panel for user but not AI
+            yield return BattleManager.instance.MoveUnit(actionUser, targetTile, actionUser.team == 0);
+        }
         else if(isWeaponAttack)
         {
-            BattleManager.instance.ResolveAttack(actionUser, targetTile);
+            yield return BattleManager.instance.ResolveAttack(actionUser, targetTile);
         }
     }
 }
