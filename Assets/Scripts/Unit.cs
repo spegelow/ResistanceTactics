@@ -18,6 +18,11 @@ public class Unit : MonoBehaviour
 
     public List<Transform> targetingPoints;
 
+    [Header("Inventory")]
+
+
+
+
     [Header("AI Settings")]
     public bool isAIControlled;
     public UnitAI unitAI;
@@ -341,6 +346,9 @@ public class Unit : MonoBehaviour
         actions.Add(BattleAction.WaitAction);
         //Add the weapon action
         actions.Add(new BattleAction(unitData.weapon));
+
+        //Grab any actions from items the user has
+        unitData.items.ForEach(i => actions.Add(new BattleAction(i)));
 
         return actions;
     }

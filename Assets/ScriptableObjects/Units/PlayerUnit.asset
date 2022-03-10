@@ -17,4 +17,7 @@ MonoBehaviour:
   maxVerticalMovement: 1
   weapon: {fileID: 11400000, guid: 500ac1641c4d10146a83090224327e97, type: 2}
   armor: {fileID: 11400000, guid: 5489085451551934f8f4f9dd4e9763a0, type: 2}
+  items:
+  - {fileID: 11400000, guid: b55db6d1a7a492546b316ead7d4797d2, type: 2}
+  - {fileID: 11400000, guid: a93c94fbd8eddfc4bbd8921f40ad7b11, type: 2}
   baseHealth: 6

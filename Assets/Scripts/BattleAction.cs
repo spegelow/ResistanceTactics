@@ -13,6 +13,9 @@ public class BattleAction
     public bool isWeaponAttack;
     public Weapon weapon;
 
+    public bool isItemAction;
+    public InventoryItem item;
+
     public enum TargetingType {SingleTile };
     public TargetingType targetingType;
 
@@ -32,6 +35,13 @@ public class BattleAction
         this.weapon = weapon;
         isWeaponAttack = true;
         this.actionName = weapon.itemName;
+    }
+
+    public BattleAction(InventoryItem item)
+    {
+        this.item = item;
+        isItemAction = true;
+        this.actionName = item.itemName;
     }
 
     public static BattleAction WaitAction

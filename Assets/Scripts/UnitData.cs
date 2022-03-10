@@ -13,5 +13,7 @@ public class UnitData : ScriptableObject
     public Weapon weapon;
     public Armor armor;
 
+    public List<InventoryItem> items;
+
     public int baseHealth;
 }
