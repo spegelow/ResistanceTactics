@@ -19,11 +19,7 @@ public class BattleAction
     public enum TargetingType {SingleTile };
     public TargetingType targetingType;
 
-    public bool requiresLineOfSight = true;
-    public bool canTargetEmptyTiles = false;
-    public bool canTargetSelf = false;
-    public bool canTargetAllies = false;
-    public bool canTargetEnemies = true;
+    public TargetingInfo targeting;
 
     public BattleAction()
     {
@@ -35,6 +31,7 @@ public class BattleAction
         this.weapon = weapon;
         isWeaponAttack = true;
         this.actionName = weapon.itemName;
+        targeting = new TargetingInfo(true, false, false, false, true, weapon.minAttackRange, weapon.maxAttackRange);
     }
 
     public BattleAction(InventoryItem item)
@@ -42,6 +39,7 @@ public class BattleAction
         this.item = item;
         isItemAction = true;
         this.actionName = item.itemName;
+        this.targeting = item.targetingInfo;
     }
 
     public static BattleAction WaitAction
@@ -62,9 +60,9 @@ public class BattleAction
             ba.isMoveAction = true;
             ba.actionName = "Move";
 
-            ba.requiresLineOfSight = false;
-            ba.canTargetEmptyTiles = true;
-            ba.canTargetSelf = true;
+            ba.targeting.requiresLineOfSight = false;
+            ba.targeting.canTargetEmptyTiles = true;
+            ba.targeting.canTargetSelf = true;
 
             return ba;
         }
@@ -82,6 +80,11 @@ public class BattleAction
             return MapManager.instance.GetTilesInRange(userTile.x, userTile.z, weapon.minAttackRange, weapon.maxAttackRange);
         }
 
+        if (isItemAction)
+        {
+            return MapManager.instance.GetTilesInRange(userTile.x, userTile.z, targeting.minRange, targeting.maxRange);
+        }
+
         return new List<MapTile>();
     }
 
@@ -90,18 +93,20 @@ public class BattleAction
         List<MapTile> targets = GetRange(userTile, user);
 
         //Filter out the tiles so that only the valid ones remain
-        bool test;
-        targets = targets.FindAll(tile =>
-        {
-            test = (!requiresLineOfSight || BattleManager.CheckLineOfSight(user, userTile, tile));
-            test = test && (canTargetEmptyTiles || tile.occupant != null);
-            test = test && (canTargetSelf || tile.occupant != user);
-            test = test && (canTargetAllies || tile.occupant == null || tile.occupant.team != user.team);
-            test = test && (canTargetEnemies || tile.occupant == null || tile.occupant.team == user.team);
-            return test;
-        });
+        targets = targets.FindAll(tile => IsTargetValid(tile, userTile, user));
         
         return targets;
+    }
+
+    public bool IsTargetValid(MapTile targetTile, MapTile userTile, Unit user)
+    {
+        bool test;
+        test = (!targeting.requiresLineOfSight || BattleManager.CheckLineOfSight(user, userTile, targetTile));
+        test = test && (targeting.canTargetEmptyTiles || targetTile.occupant != null);
+        test = test && (targeting.canTargetSelf || targetTile.occupant != user);
+        test = test && (targeting.canTargetAllies || targetTile.occupant == null || targetTile.occupant.team != user.team);
+        test = test && (targeting.canTargetEnemies || targetTile.occupant == null || targetTile.occupant.team == user.team);
+        return test;
     }
 
     public IEnumerator ResolveAction(Unit actionUser, MapTile targetTile)
@@ -119,6 +124,11 @@ public class BattleAction
         else if(isWeaponAttack)
         {
             yield return BattleManager.instance.ResolveAttack(actionUser, targetTile);
+        }
+        else if(isItemAction)
+        {
+            yield return item.ResolveEffect(actionUser, targetTile);
+            BattleManager.instance.EndTurn();
         }
     }
 }

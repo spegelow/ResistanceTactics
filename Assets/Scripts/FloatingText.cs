@@ -33,13 +33,9 @@ public class FloatingText : MonoBehaviour
         }
     }
 
-    public void InitializeDamageText(int damage)
-    {
-        damageText.text = "" + damage;
-    }
-
-    public void InitializeFloatingText(string text)
+    public void InitializeFloatingText(string text, Color color)
     {
         damageText.text = "" + text;
+        damageText.color = color;
     }
 }

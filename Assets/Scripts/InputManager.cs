@@ -43,6 +43,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Right click / Undo action
         if (Input.GetMouseButtonDown(1))
         {
             switch (inputState)
@@ -118,7 +119,7 @@ public class InputManager : MonoBehaviour
                 if (currentUnit != null)
                 {
                     //Validate the clicked tile
-                    if (selectableTiles.Contains(tile) && currentUnit.IsValidTarget(tile))
+                    if (selectableTiles.Contains(tile) && currentAction.IsTargetValid(tile, currentUnit.currentTile, currentUnit))
                     {
                         OnTargetingEnd.Invoke();
                         selectableTiles.Clear();

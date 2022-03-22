@@ -298,6 +298,16 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void ApplyHealing(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > GetMaxHealth())
+        {
+            currentHealth = GetMaxHealth();
+        }
+        OnHealthChanged.Invoke();
+    }
+
     public bool IsAlive()
     {
         return currentHealth > 0;

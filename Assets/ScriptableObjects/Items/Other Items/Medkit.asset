@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Medkit
   m_EditorClassIdentifier: 
   itemName: Medkit
-  minAttackRange: 0
-  maxAttackRange: 0
-  minDamage: 0
-  maxDamage: 0
-  baseAccuracy: 0
-  idealRange: 0
-  accuracyDropoffRate: 0
+  targetingInfo:
+    requiresLineOfSight: 0
+    canTargetEmptyTiles: 0
+    canTargetSelf: 1
+    canTargetAllies: 1
+    canTargetEnemies: 0
+    minRange: 0
+    maxRange: 2
+  effect:
+    isHealEffect: 1
+    isDamageEffect: 0
+    minAmount: 5
+    maxAmount: 5

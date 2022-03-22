@@ -220,12 +220,12 @@ public class BattleManager : MonoBehaviour
         //Check for dodge
         if (aimCheck > accuracy)
         {
-            CreateFloatingText(targetTile.occupant, "MISS!");
+            CreateFloatingText(targetTile.occupant, "MISS!", Color.white);
             yield return new WaitForSeconds(1);
         }
         else if (aimCheck > accuracy - targetTile.occupant.unitData.armor.dodge)
         {
-            CreateFloatingText(targetTile.occupant, "DODGE!");
+            CreateFloatingText(targetTile.occupant, "DODGE!", Color.white);
             yield return new WaitForSeconds(1);
         }
         else
@@ -248,18 +248,14 @@ public class BattleManager : MonoBehaviour
 
     public void CreateDamageText(Unit target, int damage)
     {
-        GameObject newObject = GameObject.Instantiate(floatingDamageTextPrefab, target.transform.position + damageTextOffset, Quaternion.identity);
-        FloatingText text = newObject.GetComponent<FloatingText>();
-
-        text.InitializeDamageText(damage);
+        CreateFloatingText(target, damage + "", Color.red);
     }
 
-    public void CreateFloatingText(Unit target, string message)
+    public void CreateFloatingText(Unit target, string message, Color textColor)
     {
         GameObject newObject = GameObject.Instantiate(floatingDamageTextPrefab, target.transform.position + damageTextOffset, Quaternion.identity);
         FloatingText text = newObject.GetComponent<FloatingText>();
-
-        text.InitializeFloatingText(message);
+        text.InitializeFloatingText(message, textColor);
     }
 
     public static Unit GetCurrentUnit()
